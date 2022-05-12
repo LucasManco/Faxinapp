@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "527003962976",
+    "project_id": "faxinapp-78623",
+    "storage_bucket": "faxinapp-78623.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527003962976:android:bee00cda5a5dd2f5a23d05",
+        "android_client_info": {
+          "package_name": "com.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "527003962976-lm7mtu24ndb0k2o2m4nago907dhpmm50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfq0Bq_FD9FS3O64E8Ql7F59VJ0SP6jLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "527003962976-lm7mtu24ndb0k2o2m4nago907dhpmm50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
