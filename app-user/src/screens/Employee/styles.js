@@ -46,7 +46,8 @@ export const UserAvatar = styled.Image`
     border-radius: 20px;
     margin-left: 30px;
     margin-right: 20px;
-    border: 4px solid #FFFFFF;
+    border-width: 4px;
+    border-color: #FFFFFF;
 `;
 export const UserInfo = styled.View`
     flex: 1;
@@ -100,15 +101,22 @@ export const ServicePrice = styled.Text`
     color: #00BAF4;
     font-size: 16px;
 `;
+
+export const ServiceDescription = styled.Text`
+    color: #00BAF4;
+    font-size: 14px;
+`;
 export const ServiceChooseButton = styled.TouchableOpacity`
     background-color: #00BAF4;
     border-radius: 10px;
     padding: 10px 15px;
+    align-items: center;
 `;
 export const ServiceChooseBtnText = styled.Text`
     color: #FFFFFF;
     font-size: 14px;
     font-weight: bold;
+    align-items: center;
 `;
 
 export const TestimonialArea = styled.View`

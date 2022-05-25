@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet,Text,View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
+import {getEmployeeServicesList} from '../../api/EmployeeApi'
 import Stars from '../../components/Stars'
+import EmployeeModal from '../../components/EmployeeModal'
 
 import { 
     Container,
@@ -23,6 +25,7 @@ import {
     ServiceInfo,
     ServiceName,
     ServicePrice,
+    ServiceDescription,
     ServiceChooseButton,
     ServiceChooseBtnText,
 
@@ -38,41 +41,13 @@ import BackIcon from '../../assets/back.svg'
 import NavPrevIcon from '../../assets/nav_prev.svg'
 import NavNextIcon from '../../assets/nav_next.svg'
 
-
-const styles = StyleSheet.create({
-    wrapper: {
-        height:100
-    },
-    slide1: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#9DD6EB'
-    },
-    slide2: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#97CAE5'
-    },
-    slide3: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#92BBD9'
-    },
-    text: {
-      color: '#fff',
-      fontSize: 30,
-      fontWeight: 'bold'
-    }
-  })
-
 export default () => {
     const navigation = useNavigation();
     const route = useRoute();
 
     const [loading, setLoading] = useState(false);
+    const [selectedService, setSelectedService] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
 
     const [userInfo, setUserInfo] = useState({
@@ -82,15 +57,15 @@ export default () => {
         avatar: route.params.avatar,
     });
 
-    const services = [
-        {
-            nome: "Serviço 1",
-            preco: "13.3"
-        }
-    ]
+    const services = getEmployeeServicesList(userInfo.id);
 
     const handleBackButton = () => {
         navigation.goBack();
+    }
+
+    const handleServiceChoose = (key) => {
+        setSelectedService(key);
+        setShowModal(true);
     }
 
     return (
@@ -118,60 +93,68 @@ export default () => {
                         <ServiceArea>
                             <ServicesTitle>Lista de Serviços</ServicesTitle>
                     
-                            <ServiceItem>
+                            <ServiceItem key="0">
                                 <ServiceInfo>
                                     <ServiceName>Serviço 01</ServiceName>
+                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
                                     <ServicePrice>R$ 14,90</ServicePrice>
                                 </ServiceInfo>
-                                <ServiceChooseButton>
+                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
                                     <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
                                 </ServiceChooseButton>
                             </ServiceItem>
-                            <ServiceItem>
+                            <ServiceItem key="1">
                                 <ServiceInfo>
                                     <ServiceName>Serviço 02</ServiceName>
+                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
                                     <ServicePrice>R$ 99,90</ServicePrice>
                                 </ServiceInfo>
-                                <ServiceChooseButton>
+                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
                                     <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
                                 </ServiceChooseButton>
                             </ServiceItem>
-                            <ServiceItem>
+                            <ServiceItem key="2">
                                 <ServiceInfo>
                                     <ServiceName>Serviço 03</ServiceName>
+                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
                                     <ServicePrice>R$ 99,90</ServicePrice>
                                 </ServiceInfo>
-                                <ServiceChooseButton>
+                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
                                     <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
                                 </ServiceChooseButton>
                             </ServiceItem>
-                            <ServiceItem>
+                            <ServiceItem key="3">
                                 <ServiceInfo>
                                     <ServiceName>Serviço 04</ServiceName>
+                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
                                     <ServicePrice>R$ 99,90</ServicePrice>
                                 </ServiceInfo>
-                                <ServiceChooseButton>
+                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
                                     <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
                                 </ServiceChooseButton>
                             </ServiceItem>
-                            <ServiceItem>
+                            <ServiceItem key="4">
                                 <ServiceInfo>
                                     <ServiceName>Serviço 05</ServiceName>
+                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
                                     <ServicePrice>R$ 99,90</ServicePrice>
                                 </ServiceInfo>
-                                <ServiceChooseButton>
+                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
                                     <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
                                 </ServiceChooseButton>
                             </ServiceItem>
                         </ServiceArea>
                     }
                     <TestimonialArea>
+                        {/* 
+                            TODO  -> Swipper bugado
+                        */}
                         <Swiper
                             style={{height: 110}}
-                            // showsPagination={false}
-                            // showsButtons={true}
-                            // prevButton={<NavPrevIcon width="35" height="35" fill="#000000" />}
-                            // nextButton={<NavNextIcon width="35" height="35" fill="#000000" />}
+                            showsPagination={false}
+                            showsButtons={true}
+                            prevButton={<NavPrevIcon width="35" height="35" fill="#000000" />}
+                            nextButton={<NavNextIcon width="35" height="35" fill="#000000" />}
                         >
                             <TestimonialItem key="0">
                                 <TestimonialInfo>
@@ -183,18 +166,19 @@ export default () => {
                                 </TestimonialBody>                                
                             </TestimonialItem>
                         </Swiper>
-                        <View>
-                            <View style={{ height: 100 }} />
-                            <Swiper>
-                                <View style={{ flex: 1, backgroundColor: 'tomato' }} />
-                            </Swiper>
-                        </View>
                     </TestimonialArea>
                 </PageBody>
             </Scroller>
             <BackButton onPress={handleBackButton}>
                 <BackIcon width="44px" height="44px" fill="#FFFFFF" />
             </BackButton>
+
+            <EmployeeModal
+                show={showModal}
+                setShow={setShowModal}
+                user={userInfo}
+                service={selectedService}
+            />
         </Container>
     );
 }
