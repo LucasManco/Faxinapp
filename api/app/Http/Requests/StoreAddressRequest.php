@@ -13,7 +13,7 @@ class StoreAddressRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class StoreAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'street'=> 'required|string',
+            'number' => 'required|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'postal_code' => 'required|string',
+            'country' => 'required|string',
+            'complement' => 'required|string'
         ];
     }
 }

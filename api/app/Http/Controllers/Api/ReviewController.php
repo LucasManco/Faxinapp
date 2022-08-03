@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\Address;
+use App\Models\Review;
+use App\Http\Controllers\Controller;
 
-class AddressController extends Controller
+class ReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return Address::all();
+        return Review::all();
     }
 
     /**
@@ -26,16 +27,11 @@ class AddressController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'street'=> 'required|string',
-            'number' => 'required|string',
-            'city' => 'required|string',
-            'state' => 'required|string',
-            'postal_code' => 'required|string',
-            'county' => 'required|string',
-            'complement' => 'required|string'
+            'score'=> 'required|numeric',
+            'description' => 'required|string'
         ]);
-        
-        return Address::create($request->all());
+
+        return Review::create($request->all());
     }
 
     /**
@@ -46,7 +42,7 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-        return Address::findOrFail($id);
+        return Review::findOrFail($id);
     }
 
     /**
@@ -58,10 +54,10 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = Address::findOrFail($id);
+        $job_type = Review::findOrFail($id);
 
         $job_type->update($request->all());
-        
+
         return $job_type;
     }
 
@@ -73,6 +69,7 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        return Address::destroy($id);
+        return Review::destroy($id);
     }
 }
+

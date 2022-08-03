@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
-use App\Models\Review;
+use App\Models\NotWorkDay;
+use App\Http\Controllers\Controller;
 
-class ReviewController extends Controller
+class NotWorkDayController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return Review::all();
+        return NotWorkDay::all();
     }
 
     /**
@@ -26,11 +27,10 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'score'=> 'required|numeric',
-            'description' => 'required|string'
+            'day'=> 'required|date'
         ]);
-        
-        return Review::create($request->all());
+
+        return NotWorkDay::create($request->all());
     }
 
     /**
@@ -41,7 +41,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        return Review::findOrFail($id);
+        return NotWorkDay::findOrFail($id);
     }
 
     /**
@@ -53,10 +53,10 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = Review::findOrFail($id);
+        $job_type = NotWorkDay::findOrFail($id);
 
         $job_type->update($request->all());
-        
+
         return $job_type;
     }
 
@@ -68,7 +68,6 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        return Review::destroy($id);
+        return NotWorkDay::destroy($id);
     }
 }
-

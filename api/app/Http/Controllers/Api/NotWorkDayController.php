@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\Employee;
+use App\Models\NotWorkDay;
+use App\Http\Controllers\Controller;
 
-class EmployeeController extends Controller
+class NotWorkDayController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return Employee::all();
+        return NotWorkDay::all();
     }
 
     /**
@@ -26,12 +27,10 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'charge_transport'=> 'required|boolean',
-            'transport_value' => 'required|numeric',
-            'user_id' => 'required|exists:users'
+            'day'=> 'required|date'
         ]);
-        
-        return Employee::create($request->all());
+
+        return NotWorkDay::create($request->all());
     }
 
     /**
@@ -42,7 +41,7 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        return Employee::findOrFail($id);
+        return NotWorkDay::findOrFail($id);
     }
 
     /**
@@ -54,10 +53,10 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = Employee::findOrFail($id);
+        $job_type = NotWorkDay::findOrFail($id);
 
         $job_type->update($request->all());
-        
+
         return $job_type;
     }
 
@@ -69,7 +68,6 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        return Employee::destroy($id);
+        return NotWorkDay::destroy($id);
     }
 }
-

@@ -1,12 +1,7 @@
 <?php
-use App\Http\Controllers\AddressController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\JobController;
-use App\Http\Controllers\JobTypeController;
-use App\Http\Controllers\NotWorkDayController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\WorkDayController;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
- 
-Route::controller(JobController::class)->group(function () {
-    Route::get('/job', 'indexView');
-    Route::post('/orders', 'store');
-});
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::resource('address', AddressController::class);
+});
+
+
+require __DIR__.'/auth.php';

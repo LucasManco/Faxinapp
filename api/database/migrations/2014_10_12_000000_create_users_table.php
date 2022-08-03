@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone_number');
-            $table->integer('cpf');
-            $table->float('score');
+            $table->string('phone_number')->nullable();
+            $table->bigInteger('cpf')->nullable();
+            $table->float('score')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

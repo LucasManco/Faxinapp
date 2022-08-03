@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\Job;
+use App\Models\JobType;
+use App\Http\Controllers\Controller;
 
-class JobController extends Controller
+class JobTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,21 +15,8 @@ class JobController extends Controller
      */
     public function index()
     {
-        return Job::all();
+        return JobType::all();
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexView()
-    {
-        $jobs = Job::all();
-
-        return view('Job.show')->with('jobs', $jobs);
-    }
-
 
     /**
      * Store a newly created resource in storage.
@@ -39,17 +27,13 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'price'=> 'required|numeric',
-            'transport'=> 'required|numeric',
-            'tax'=> 'required|numeric',
-            'price_final'=> 'required|numeric',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date',
-            'status' => Rule::in(['requested','confirmed','done','canceled']),
-            'observation' => 'required|string'
+            'name'=> 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'time' => 'required|integer'
         ]);
-        
-        return Job::create($request->all());
+
+        return JobType::create($request->all());
     }
 
     /**
@@ -60,7 +44,7 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        return Job::findOrFail($id);
+        return JobType::findOrFail($id);
     }
 
     /**
@@ -72,10 +56,10 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = Job::findOrFail($id);
+        $job_type = JobType::findOrFail($id);
 
         $job_type->update($request->all());
-        
+
         return $job_type;
     }
 
@@ -87,6 +71,6 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        return Job::destroy($id);
+        return JobType::destroy($id);
     }
 }

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\NotWorkDay;
+use App\Models\WorkDay;
+use App\Http\Controllers\Controller;
 
-class NotWorkDayController extends Controller
+class WorkDayController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class NotWorkDayController extends Controller
      */
     public function index()
     {
-        return NotWorkDay::all();
+        return WorkDay::all();
     }
 
     /**
@@ -26,10 +27,12 @@ class NotWorkDayController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'day'=> 'required|date'
+            'day'=> 'required|string',
+            'start' => 'required|date',
+            'end' => 'required|date'
         ]);
-        
-        return NotWorkDay::create($request->all());
+
+        return WorkDay::create($request->all());
     }
 
     /**
@@ -40,7 +43,7 @@ class NotWorkDayController extends Controller
      */
     public function show($id)
     {
-        return NotWorkDay::findOrFail($id);
+        return WorkDay::findOrFail($id);
     }
 
     /**
@@ -52,10 +55,10 @@ class NotWorkDayController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = NotWorkDay::findOrFail($id);
+        $job_type = WorkDay::findOrFail($id);
 
         $job_type->update($request->all());
-        
+
         return $job_type;
     }
 
@@ -67,6 +70,6 @@ class NotWorkDayController extends Controller
      */
     public function destroy($id)
     {
-        return NotWorkDay::destroy($id);
+        return WorkDay::destroy($id);
     }
 }

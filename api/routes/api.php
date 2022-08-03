@@ -1,11 +1,11 @@
 <?php
-use App\Http\Controllers\AddressController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\JobController;
-use App\Http\Controllers\JobTypeController;
-use App\Http\Controllers\NotWorkDayController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\WorkDayController;
+use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\JobController;
+use App\Http\Controllers\Api\JobTypeController;
+use App\Http\Controllers\Api\NotWorkDayController;
+use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\WorkDayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,13 +21,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::resource('address', AddressController::class);
-Route::resource('employee', EmployeeController::class);
-Route::resource('job', JobController::class);
-Route::resource('job-type', JobTypeController::class);
-Route::resource('not-work-day', NotWorkDayTypeController::class);
-Route::resource('review', ReviewController::class);
-Route::resource('work-day', WorkDayTypeController::class);
+Route::apiResource('address', AddressController::class);
+Route::apiResource('employee', EmployeeController::class);
+Route::apiResource('job', JobController::class);
+Route::apiResource('job-type', JobTypeController::class);
+Route::apiResource('not-work-day', NotWorkDayTypeController::class);
+Route::apiResource('review', ReviewController::class);
+Route::apiResource('work-day', WorkDayTypeController::class);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

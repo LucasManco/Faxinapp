@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\WorkDay;
+use App\Models\Address;
+use App\Http\Controllers\Controller;
 
-class WorkDayController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class WorkDayController extends Controller
      */
     public function index()
     {
-        return WorkDay::all();
+        return Address::all();
     }
 
     /**
@@ -26,12 +27,16 @@ class WorkDayController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'day'=> 'required|string',
-            'start' => 'required|date',
-            'end' => 'required|date'
+            'street'=> 'required|string',
+            'number' => 'required|string',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'postal_code' => 'required|string',
+            'county' => 'required|string',
+            'complement' => 'required|string'
         ]);
-        
-        return WorkDay::create($request->all());
+
+        return Address::create($request->all());
     }
 
     /**
@@ -42,7 +47,7 @@ class WorkDayController extends Controller
      */
     public function show($id)
     {
-        return WorkDay::findOrFail($id);
+        return Address::findOrFail($id);
     }
 
     /**
@@ -54,10 +59,10 @@ class WorkDayController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = WorkDay::findOrFail($id);
+        $job_type = Address::findOrFail($id);
 
         $job_type->update($request->all());
-        
+
         return $job_type;
     }
 
@@ -69,6 +74,6 @@ class WorkDayController extends Controller
      */
     public function destroy($id)
     {
-        return WorkDay::destroy($id);
+        return Address::destroy($id);
     }
 }

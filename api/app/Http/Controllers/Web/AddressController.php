@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
-use App\Models\JobType;
+use App\Models\Address;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAddressRequest;
 
-class JobTypeController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,9 @@ class JobTypeController extends Controller
      */
     public function index()
     {
-        return JobType::all();
+        //return Address::all();
+        return view('account/address/edit');
+
     }
 
     /**
@@ -23,16 +27,12 @@ class JobTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAddressRequest $request)
     {
-        $request->validate([
-            'name'=> 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'time' => 'required|integer'
-        ]);
-        
-        return JobType::create($request->all());
+        dd($request->validated());
+
+
+        return Address::create($request->all());
     }
 
     /**
@@ -43,7 +43,7 @@ class JobTypeController extends Controller
      */
     public function show($id)
     {
-        return JobType::findOrFail($id);
+        return Address::findOrFail($id);
     }
 
     /**
@@ -55,10 +55,10 @@ class JobTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = JobType::findOrFail($id);
+        $job_type = Address::findOrFail($id);
 
         $job_type->update($request->all());
-        
+
         return $job_type;
     }
 
@@ -70,6 +70,6 @@ class JobTypeController extends Controller
      */
     public function destroy($id)
     {
-        return JobType::destroy($id);
+        return Address::destroy($id);
     }
 }
