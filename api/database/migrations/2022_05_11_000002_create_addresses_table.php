@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('state');
             $table->string('postal_code');
             $table->string('country');
-            $table->string('complement');
+            $table->string('complement')->nullable();
 
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
         });
     }

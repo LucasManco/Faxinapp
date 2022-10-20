@@ -23,7 +23,7 @@
             <div class="mt-4">
                 <x-label for="cpf" :value="__('CPF')" />
 
-                <x-input id="cpf" class="block mt-1 w-full" type="number" name="cpf" :value="old('cpf')" required />
+                <x-input id="cpf" class="block mt-1 w-full" type="text" name="cpf" :value="old('cpf')" required />
             </div>
 
             <!-- Email Address -->
@@ -53,7 +53,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 dark:text-white" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
 

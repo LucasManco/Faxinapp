@@ -30,7 +30,7 @@ class StoreAddressRequest extends FormRequest
             'state' => 'required|string',
             'postal_code' => 'required|string',
             'country' => 'required|string',
-            'complement' => 'required|string'
+            'complement' => 'nullable|string'
         ];
     }
 }

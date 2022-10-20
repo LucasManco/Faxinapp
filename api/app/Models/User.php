@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'cpf'
+        'cpf',
+        'phone_number'
     ];
 
     /**
@@ -42,4 +43,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isEmployee(){
+        return boolval($this->hasOne(Employee::class)->first());
+    }
+
+    public function address()
+    {
+        return $this->hasMany(Address::class);
+    }
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+    public function jobType()
+    {
+        return $this->hasOne(JobType::class);
+    }
 }

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamps();
             $table->date('day');
 
-            $table->unsignedBigInteger('employee_id');
-            $table->foreign('employee_id')->references('id')
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')
                 ->on('employees')->onDelete('cascade');
         });
     }

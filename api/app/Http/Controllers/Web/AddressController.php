@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Address;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAddressRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class AddressController extends Controller
 {
@@ -16,8 +18,29 @@ class AddressController extends Controller
      */
     public function index()
     {
-        //return Address::all();
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
+        return view('account/address/index')->with('addresses',$addresses);
+
+    }
+    /**
+    * Show the form for creating a new resource.
+    *
+    * @return Response
+    */
+    public function create()
+    {
         return view('account/address/edit');
+
+    }
+    /**
+    * Show the form for creating a new resource.
+    *
+    * @return Response
+    */
+    public function edit($id)
+    {
+        $address = Address::findOrFail($id);
+        return view('account/address/edit')->with('address',$address);;
 
     }
 
@@ -29,10 +52,15 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
-        dd($request->validated());
+
+        $data = $request->validated();
+        $data["user_id"] = Auth::user()->id;
+
+        Address::create($data);
 
 
-        return Address::create($request->all());
+        return redirect(route('address.index'))->with('msg','Endereço cadastrado com sucesso');
+
     }
 
     /**
@@ -55,11 +83,11 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = Address::findOrFail($id);
+        $address = Address::findOrFail($id);
 
-        $job_type->update($request->all());
+        $address->update($request->all());
 
-        return $job_type;
+        return redirect(route('address.index'))->with('msg','Endereço atualizado com sucesso');
     }
 
     /**
@@ -70,6 +98,9 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        return Address::destroy($id);
+        Address::destroy($id);
+
+        return redirect(route('address.index'))->with('msg','Endereço removido com sucesso');
+
     }
 }

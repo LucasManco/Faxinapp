@@ -5,17 +5,43 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Models\JobType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreJobTypeRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class JobTypeController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return JobType::all();
+        $JobTypes = JobType::all();
+        return view('account/job_type/index')->with('JobTypes',$JobTypes);
+
+    }
+    /**
+    * Show the form for creating a new resource.
+    *
+    * @return Response
+    */
+    public function create()
+    {
+        return view('account/job_type/edit');
+
+    }
+    /**
+    * Show the form for creating a new resource.
+    *
+    * @return Response
+    */
+    public function edit($id)
+    {
+        $JobType = JobType::where('user_id', Auth::user()->id)->get();
+        return view('account/job_type/edit')->with('JobType',$JobType);;
+
     }
 
     /**
@@ -24,16 +50,13 @@ class JobTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreJobTypeRequest $request)
     {
-        $request->validate([
-            'name'=> 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'time' => 'required|integer'
-        ]);
+        $data = $request->validated();
+        JobType::create($data);
 
-        return JobType::create($request->all());
+        return redirect(route('user.index'))->with('msg','Cadastro de novo parceiro realizado com sucesso.');
+
     }
 
     /**
@@ -56,11 +79,11 @@ class JobTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $job_type = JobType::findOrFail($id);
+        $JobType = JobType::findOrFail($id);
 
-        $job_type->update($request->all());
+        $JobType->update($request->all());
 
-        return $job_type;
+        return redirect(route('job_type.index'))->with('msg','Endereço atualizado com sucesso');
     }
 
     /**
@@ -71,6 +94,10 @@ class JobTypeController extends Controller
      */
     public function destroy($id)
     {
-        return JobType::destroy($id);
+        JobType::destroy($id);
+
+        return redirect(route('job_type.index'))->with('msg','Endereço removido com sucesso');
+
     }
 }
+

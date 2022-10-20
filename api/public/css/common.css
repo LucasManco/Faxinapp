@@ -1,3 +1,21 @@
 body .logo {
-  height: 50px;
+  height: 3rem;
+}
+body .msg {
+  background-color: #D4EDDA;
+  color: #155724;
+  border: 1px solid #C3E6CB;
+  margin-bottom: 0px;
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+}
+body .error {
+  background-color: #FFEBEE;
+  color: #D32F2F;
+  border: 1px solid #FFCDD2;
+  margin-bottom: 0px;
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
 }

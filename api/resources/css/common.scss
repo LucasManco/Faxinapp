@@ -1,5 +1,24 @@
 body{
     .logo{
-        height: 50px;
+        @apply h-12;
     }
+
+    .msg{
+        background-color: #D4EDDA;
+        color: #155724;
+        border: 1px solid #C3E6CB;
+        @apply w-full mb-0 text-center p-2;
+    }
+    .error{
+        background-color: #FFEBEE;
+        color: #D32F2F;
+        border: 1px solid #FFCDD2;
+        @apply w-full mb-0 text-center p-2;
+    }
+}
+
+
+//Collors Pattern
+.collor-background-primary{
+
 }

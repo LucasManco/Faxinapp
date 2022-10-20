@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\AddressController;
+use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\EmployeeController;
+use App\Http\Controllers\Web\JobTypeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +28,18 @@ Route::get('/dashboard', function () {
 
 
 
-
-
 Route::middleware('auth')->group(function () {
     Route::resource('address', AddressController::class);
+    Route::resource('user', UserController::class)->except([
+        'store','delete'
+    ]);
+    Route::resource('employee', EmployeeController::class)->except([
+        'update','delete'
+    ]);
+    Route::resource('job_type', JobTypeController::class)->except([
+
+    ]);
+
 });
 
 

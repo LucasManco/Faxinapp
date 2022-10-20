@@ -20,6 +20,10 @@ class CreateJobTypesTable extends Migration
             $table->string('description');
             $table->float('price');
             $table->integer('time');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')
+                ->on('users')->onDelete('cascade');
         });
     }
 

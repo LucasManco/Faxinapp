@@ -17,18 +17,24 @@
         <link rel="stylesheet" type="text/css" href="{{url(mix('css/common.css'))}}">
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-600">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            <header class="bg-white shadow">
+            <header class="dark:text-white bg-white dark:bg-gray-800 shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
-            
+
             <!-- Page Content -->
             <main>
+                @if (session('msg'))
+                    <p class="msg"> {{session('msg')}}</p>
+                @endif
+                @if (session('error'))
+                    <p class="error"> {{session('error')}}</p>
+                @endif
                 {{ $slot }}
             </main>
         </div>
