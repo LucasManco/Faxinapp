@@ -18,7 +18,11 @@ class CreateEmployeesTable extends Migration
             $table->timestamps();
             $table->boolean('charge_transport');
             $table->float('transport_value');
+            $table->string('description');
+            $table->string('profile_image');
+            $table->string('categories');
 
+            
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade');

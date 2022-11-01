@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth'
+
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -16,7 +16,11 @@ import {
 } from './styles';
 
 
-
+/**
+ * 
+ * TODO: NECESSÁRIO DESENVOLVER UM NOVO MÉTODO DE RECUPERAR A SENHA
+ * 
+ */
 import SignInput from '../../components/SignInput';
 
 import FaxinaLogo from '../../assets/logo/04.svg';

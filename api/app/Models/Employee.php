@@ -16,10 +16,22 @@ class Employee extends Model
     protected $fillable = [
         'transport_value',
         'charge_transport',
-        'user_id'
+        'user_id',
+        'description',
+        'profile_image',
+        'categories'
+
     ];
 
     public function getUser(){
         return $this->belongsTo(User::class,'user_id')->first();
+    }
+    public function jobType()
+    {
+        return $this->hasMany(JobType::class);
+    }
+    public function workdays()
+    {
+        return $this->hasMany(WorkDay::class, 'user_id');
     }
 }

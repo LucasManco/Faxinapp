@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\JobTypeController;
 use App\Http\Controllers\Api\NotWorkDayController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\WorkDayController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WorkPlaceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,16 +22,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::apiResource('address', AddressController::class);
-Route::apiResource('employee', EmployeeController::class);
-Route::apiResource('job', JobController::class);
-Route::apiResource('job-type', JobTypeController::class);
-Route::apiResource('not-work-day', NotWorkDayTypeController::class);
-Route::apiResource('review', ReviewController::class);
-Route::apiResource('work-day', WorkDayTypeController::class);
+    Route::apiResource('address', AddressController::class);
+    Route::apiResource('employee', EmployeeController::class);
+    Route::apiResource('job', JobController::class);
+    Route::apiResource('job-type', JobTypeController::class);
+    Route::apiResource('not-work-day', NotWorkDayTypeController::class);
+    Route::apiResource('review', ReviewController::class);
+    Route::apiResource('work-day', WorkDayTypeController::class);
 
-
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('login', [UserController::class, 'login']);
+Route::post('register', [UserController::class, 'register']);
+
+
+Route::get('work_place/getCities/{id}', [WorkPlaceController::class, 'getCities'])->name('work_place.getCities');
+
+// Route::post('/register', function (Request $request) {
+//     return response()->json($request->all(), 200);
+// });
+

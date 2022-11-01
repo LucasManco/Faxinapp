@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\User;
+use App\Models\Address;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use Illuminate\Support\Facades\Auth;
@@ -21,8 +22,9 @@ class EmployeeController extends Controller
     {
         $employees = Employee::all();
         //dd($employees->first()->belongsTo(User::class,'user_id')->first());
-
-        return view('account/employee/index')->with('employees',$employees);
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
+        
+        return view('employee/index')->with(['employees'=> $employees, 'addresses'=>$addresses]);
 
     }
     /**
@@ -59,6 +61,14 @@ class EmployeeController extends Controller
         $data["charge_transport"] = isset($data->transport_value) && $data->transport_value > 0;
         $data["user_id"] = Auth::user()->id;
 
+        /**
+         * Tratamento do armazenamento de imagem
+         */
+
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images/profile'), $imageName);
+        $data["profile_image"] = "/images/profile" . $imageName;
+
         Employee::create($data);
 
 
@@ -75,7 +85,7 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $employee = Employee::findOrFail($id);
-        return view('account/employee/show')->with('employee',$employee);;
+        return view('employee/show')->with('employee',$employee);;
 
     }
 

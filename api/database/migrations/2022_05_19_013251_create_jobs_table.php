@@ -21,8 +21,8 @@ return new class extends Migration
             $table->float('tax');
             $table->float('final_price');
             //TODO verificar bug do migrate start_time
-            //$table->timestamp('start_time');
-            //$table->timestamp('end_time');
+            $table->timestamp('start_time');
+            $table->timestamp('end_time');
             $table->enum('status',['requested','confirmed','done','canceled']);
             $table->longText('observation');
             $table->unsignedBigInteger('address_id');

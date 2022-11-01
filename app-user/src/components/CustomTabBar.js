@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components/native';
 
 // import { UserContext } from '../contexts/UserContext';
-import auth from '@react-native-firebase/auth'
+import UserApi from '../api/UserApi';
 
 import HomeIcon from '../assets/home.svg';
 import SearchIcon from '../assets/search.svg';
@@ -38,7 +38,7 @@ const AvatarIcon = styled.Image`
 `;
 
 export default ({ state, navigation }) => {
-    const user = auth().currentUser;
+    const user = UserApi.checkToken();
 
     const goTo = (screenName) => {
         navigation.navigate(screenName);

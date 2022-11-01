@@ -6,16 +6,27 @@ import { useNavigation } from '@react-navigation/native';
 
 import FaxinaLogo from '../../assets/logo/04.svg';
 
+import UserApi from '../../api/UserApi'
+
+
 export default () => {
 
-    // const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
 
     useEffect(()=>{
         const checkToken = async () => {
             const token = await AsyncStorage.getItem('token');
             if(token){
-                //validar o token
+                let json = await UserApi.checkToken(token);
+                if(json.cpf){
+                    navigation.reset({
+                        routes:[{name:'MainTab'}]
+                    });
+
+                }
+                else{
+                    navigation.navigate('SignIn');
+                }
             }
             else{
                 navigation.navigate('SignIn');

@@ -15,6 +15,10 @@ class JobType extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'description','price','time'
+        'name', 'description','price','time','user_id'
     ];
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'user_id');
+    }
 }

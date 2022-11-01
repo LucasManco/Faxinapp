@@ -2,8 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Alert, Text } from 'react-native';
 import {createEmployee} from '../../api/EmployeeApi'
-import firestore from '@react-native-firebase/firestore'
-import auth from '@react-native-firebase/auth'
+
 
 import {
     Container,

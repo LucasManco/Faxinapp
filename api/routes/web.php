@@ -5,7 +5,9 @@ use App\Http\Controllers\Web\AddressController;
 use App\Http\Controllers\Web\UserController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\JobTypeController;
-
+use App\Http\Controllers\Web\JobController;
+use App\Http\Controllers\Web\WorkDayController;
+use App\Http\Controllers\Web\WorkPlaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,7 @@ use App\Http\Controllers\Web\JobTypeController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Route::get('/dashboard', function () {
@@ -36,9 +38,21 @@ Route::middleware('auth')->group(function () {
     Route::resource('employee', EmployeeController::class)->except([
         'update','delete'
     ]);
-    Route::resource('job_type', JobTypeController::class)->except([
-
+    Route::resource('job_type', JobTypeController::class);
+    
+    Route::resource('work_day', WorkDayController::class)->except([
+         'update', 'delete', 'create', 'show'
     ]);
+    Route::resource('work_place', WorkPlaceController::class)->except([
+        'update', 'delete', 'show'
+   ]);
+    
+    Route::resource('job', JobController::class)->except([
+        'show','update', 'delete', 'create', 'show'
+   ]);
+   Route::put('/job/accept', [JobController::class, 'acceptJob'])->name('job.accept');
+   
+
 
 });
 

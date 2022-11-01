@@ -48,7 +48,7 @@ export default ({data}) => {
 
     const handleEmployeeClick = () => {
         navigation.navigate('Employee',{
-            id: data.uid,
+            id: data.id,
             name: data.name,
             stars: data.stars,
             avatar: data.avatar

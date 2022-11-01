@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { Container } from './styles';
-import auth from '@react-native-firebase/auth'
+import UserApi from '../../api/UserApi';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -14,7 +14,7 @@ import {
 export default () => {
     const navigation = useNavigation();
 
-    const user = auth().currentUser;
+    const user = UserApi.checkToken();
     var email = "";
 
     if (user !== null) {
@@ -35,7 +35,7 @@ export default () => {
 
     const handleSignOut = () => {
         console.log('logout');
-        auth().signOut();
+        //auth().signOut();
     }
 
     return (

@@ -135,7 +135,7 @@ export default ({show, setShow, user, service}) => {
     const [listHour, setListHour] = useState([]);
     
     useEffect(()=>{
-        let daysInMonth = newDate(selectedYear, selectedMonth+1, 0).getDate();
+        let daysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
         
     }, [selectedMonth, selectedYear])
 

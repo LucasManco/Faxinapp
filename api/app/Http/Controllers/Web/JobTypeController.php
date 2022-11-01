@@ -7,6 +7,7 @@ use App\Models\JobType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreJobTypeRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\WorkDay;
 
 
 class JobTypeController extends Controller
@@ -18,7 +19,7 @@ class JobTypeController extends Controller
      */
     public function index()
     {
-        $JobTypes = JobType::all();
+        $JobTypes = JobType::where('user_id', Auth::user()->id)->get();
         return view('account/job_type/index')->with('JobTypes',$JobTypes);
 
     }
@@ -53,9 +54,13 @@ class JobTypeController extends Controller
     public function store(StoreJobTypeRequest $request)
     {
         $data = $request->validated();
+        $data['user_id']= Auth::user()->id;
+        $data['price'] = str_replace(',', '.', $data['price']);
+        
         JobType::create($data);
 
-        return redirect(route('user.index'))->with('msg','Cadastro de novo parceiro realizado com sucesso.');
+
+        return redirect(route('user.index'))->with('msg','Cadastro de novo tipo de serviço realizado com sucesso.');
 
     }
 
@@ -67,7 +72,9 @@ class JobTypeController extends Controller
      */
     public function show($id)
     {
-        return JobType::findOrFail($id);
+        $JobType = JobType::find($id);
+        $AvaliableDays = WorkDay::getAvaliableDays($JobType->user_id);
+        return view('job_type/show')->with(['JobType'=>$JobType,'AvaliableDays'=>$AvaliableDays]);
     }
 
     /**
@@ -83,7 +90,7 @@ class JobTypeController extends Controller
 
         $JobType->update($request->all());
 
-        return redirect(route('job_type.index'))->with('msg','Endereço atualizado com sucesso');
+        return redirect(route('job_type.index'))->with('msg','Tipo de serviço atualizado com sucesso');
     }
 
     /**
@@ -96,7 +103,7 @@ class JobTypeController extends Controller
     {
         JobType::destroy($id);
 
-        return redirect(route('job_type.index'))->with('msg','Endereço removido com sucesso');
+        return redirect(route('job_type.index'))->with('msg','Tipo de serviço removido com sucesso');
 
     }
 }

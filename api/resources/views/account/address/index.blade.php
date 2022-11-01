@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 m-12">
-            <a class="shadow bg-cyan-700 hover:bg-cyan-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            <a class="shadow bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
             href="{{ url(route('address.create')) }}">
                 {{ __('Novo Endereço') }}
             </a>

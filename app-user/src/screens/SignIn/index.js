@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth'
-
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -31,6 +29,8 @@ import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
 import { Alert } from 'react-native';
 
+import UserApi from '../../api/UserApi'
+
 export default () => {
     // const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
@@ -39,22 +39,23 @@ export default () => {
     const [passwordField, setPasswordField] = useState('');
 
     const handleSignClick = async () => {
-        // navigation.reset({
-        //         routes:[{name:'MainTab'}]
-        //     });
-        if(emailField != '' && passwordField != '') {
-                auth()
-                    .signInWithEmailAndPassword(emailField,passwordField)
-                    .then(() => {
-                        Alert.alert("Logado com sucesso!")
-                    })
-                    .catch((error) => Alert.alert(error.Alert));
-                // navigation.reset({
-                //     routes:[{name:'MainTab'}]
-                // });
-        } else {
-            alert("Preencha os campos!");
-        }
+        // if(emailField != '' && passwordField != '') {
+            //let json = await UserApi.signIn(emailField, passwordField);
+            
+            //if(json.plainTextToken){
+               // await AsyncStorage.setItem('token', json.plainTextToken);
+
+                navigation.reset({
+                    routes:[{name:'MainTab'}]
+                });
+            //}
+            //else{
+              //  alert(json);
+//            }
+
+        // } else {
+        //     alert("Preencha os campos!");
+        // }
     }
 
     const handleMessageButtonClick = () => {
@@ -113,9 +114,9 @@ export default () => {
                 <SignMessageButtonTextBold>Cadastre-se</SignMessageButtonTextBold>
             </SignMessageButton>
 
-            <SignMessageButton onPress={handleMissPasswordButtonClick}>
+            {/* <SignMessageButton onPress={handleMissPasswordButtonClick}>
                 <SignMessageButtonText>Esqueceu sua Senha?</SignMessageButtonText>
-            </SignMessageButton>
+            </SignMessageButton> */}
         </Container>
     );
 }

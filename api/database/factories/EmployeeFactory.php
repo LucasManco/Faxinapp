@@ -16,10 +16,16 @@ class EmployeeFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create('pt_BR');
+
+        $categories = ['Diarista','Limpeza de Piscina','Passadeira','Lavadeira', 'Cozinheira'];
+        
         return [
             'charge_transport' => false,
-            'transport_value' => 0
-
+            'transport_value' => 0,
+            'description' => $faker->realText(180),
+            'profile_image' => "/images/profile/" . rand(1,20) . ".jpg",
+            'categories' => json_encode([$categories[rand(0,count($categories)-1)]]),
         ];
     }
 }

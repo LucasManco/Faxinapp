@@ -25,6 +25,7 @@ class StoreEmployeeRequest extends FormRequest
     {
         return [
             'transport_value'=> 'string',
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ];
     }
 }
