@@ -1,32 +1,45 @@
-import firestore from '@react-native-firebase/firestore'
-import auth from '@react-native-firebase/auth'
+
+import AsyncStorage from '@react-native-community/async-storage';
+
+// const BASE_API = 'http://10.0.2.2:8000/api';
+const BASE_API = 'http://192.168.2.117:8000/api';
 
 
 
 export async function getEmployees(employeeRereived) {
     var employeeList = [];
-    const employees = await firestore()
-        .collection('enployees')
-        .get();
+    const token = await AsyncStorage.getItem('token');
 
-    employees.forEach(async(doc) => {
-        employeeList.push({
-            uid : doc.id,
-            ...doc.data()
-        });
+    const req = await fetch(`${BASE_API}/employee`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
     });
-
+    
+    employeeList = await req.json();    
+    
     employeeRereived(employeeList);
 }
 
-export async function getEmployee(uid) {
+export async function getEmployee(id) {
     var employeeList = [];
-    const employee = await firestore()
-        .collection('enployees')
-        .doc(uid)
-        .get();
+    const token = await AsyncStorage.getItem('token');
 
-    return employeeList;
+    const req = await fetch(`${BASE_API}/employee/${id}`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    
+    employeeList = await req.json();    
+
+    employeeRereived(employeeList);
 }
 
 export async function getEmployeeServicesList(uid) {
@@ -148,4 +161,18 @@ export async function getEmployeeAgenda(uid) {
         },
     ]
     return servicesList;
+}
+
+export async function getDefaultAddress(addressRereived){
+    const token = await AsyncStorage.getItem('token');
+    const req = await fetch(`${BASE_API}/user/getDefaultAddress`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    address = await req.json();    
+    addressRereived(address);
 }

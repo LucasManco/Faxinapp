@@ -24,4 +24,13 @@ class Address extends Model
         'complement',
         'user_id'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function becomeDefault(){
+        $user = $this->user()->first(); 
+        $user->default_address_id = $this->id;
+        return $user->save();
+    }
 }

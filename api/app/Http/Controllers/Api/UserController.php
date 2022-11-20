@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Address;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -48,5 +49,11 @@ class UserController extends Controller
         $user['plainTextToken'] = $user->createToken('JWT')->plainTextToken;
 
         return response()->json([$user],200);
+    }
+
+    public function getDefaultAddress(){
+
+        $address =  Address::findOrFail(Auth::user()->default_address_id);    
+        return response()->json([$address->street . ', ' . $address->number]);    
     }
 }

@@ -93,7 +93,7 @@
                 </x-account-sidebar-item>
                 <x-account-sidebar-item>
                     <x-slot name="url">{{ route('job.index'); }}</x-slot>
-                    <x-slot name="title">Serviços</x-slot>
+                    <x-slot name="title">Historico</x-slot>
                     <x-slot name="icon">
                     </x-slot>
                 </x-account-sidebar-item>

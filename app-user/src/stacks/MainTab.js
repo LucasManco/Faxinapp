@@ -7,7 +7,7 @@ import Home from '../screens/Home';
 import Search from '../screens/Search';
 import Appointments from '../screens/Appointments';
 import Favorites from '../screens/Favorites';
-import Profile from '../screens/Profile';
+import Profile from '../screens/Account/Profile';
 
 const Tab = createBottomTabNavigator();
 

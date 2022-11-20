@@ -7,6 +7,7 @@ import Preload from '../screens/Preload';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import EmployeeCreate from '../screens/EmployeeCreate';
+import Address from '../screens/Account/Address';
 const Stack = createStackNavigator();
 
 export default () => (
@@ -22,5 +23,8 @@ export default () => (
         <Stack.Screen name="EmployeeCreate" component={EmployeeCreate} />
         <Stack.Screen name="MainTab" component={MainTab} />
         <Stack.Screen name="Employee" component={Employee} />
+
+
+        <Stack.Screen name="Address" component={Address} />
     </Stack.Navigator>
 );

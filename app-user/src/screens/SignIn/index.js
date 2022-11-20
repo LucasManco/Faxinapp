@@ -39,23 +39,24 @@ export default () => {
     const [passwordField, setPasswordField] = useState('');
 
     const handleSignClick = async () => {
-        // if(emailField != '' && passwordField != '') {
-            //let json = await UserApi.signIn(emailField, passwordField);
+        if(emailField != '' && passwordField != '') {
             
-            //if(json.plainTextToken){
-               // await AsyncStorage.setItem('token', json.plainTextToken);
+            let json = await UserApi.signIn(emailField, passwordField);
+            
+            if(json.plainTextToken){
+               await AsyncStorage.setItem('token', json.plainTextToken);
 
                 navigation.reset({
                     routes:[{name:'MainTab'}]
                 });
-            //}
-            //else{
-              //  alert(json);
-//            }
+            }
+            else{
+               alert(json);
+           }
 
-        // } else {
-        //     alert("Preencha os campos!");
-        // }
+        } else {
+            alert("Preencha os campos!");
+        }
     }
 
     const handleMessageButtonClick = () => {

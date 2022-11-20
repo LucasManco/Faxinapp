@@ -32,7 +32,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('account/user/edit')->with('user',$user);;
+        return view('user/edit')->with('user',$user);;
 
     }
 
@@ -61,7 +61,7 @@ class UserController extends Controller
         $user =  User::findOrFail($id);
         //$user->isEmployee = $user->isEmployee();
 
-        return view('account/user/show')->with('user',$user);
+        return view('user/show')->with('user',$user);
     }
 
     /**

@@ -20,7 +20,7 @@ class JobTypeController extends Controller
     public function index()
     {
         $JobTypes = JobType::where('user_id', Auth::user()->id)->get();
-        return view('account/job_type/index')->with('JobTypes',$JobTypes);
+        return view('job_type/index')->with('JobTypes',$JobTypes);
 
     }
     /**
@@ -30,7 +30,7 @@ class JobTypeController extends Controller
     */
     public function create()
     {
-        return view('account/job_type/edit');
+        return view('job_type/edit');
 
     }
     /**
@@ -41,7 +41,7 @@ class JobTypeController extends Controller
     public function edit($id)
     {
         $JobType = JobType::where('user_id', Auth::user()->id)->get();
-        return view('account/job_type/edit')->with('JobType',$JobType);;
+        return view('job_type/edit')->with('JobType',$JobType);;
 
     }
 
@@ -73,8 +73,10 @@ class JobTypeController extends Controller
     public function show($id)
     {
         $JobType = JobType::find($id);
+        $JobAditionals = $JobType->jobTypeAdditional()->get();
         $AvaliableDays = WorkDay::getAvaliableDays($JobType->user_id);
-        return view('job_type/show')->with(['JobType'=>$JobType,'AvaliableDays'=>$AvaliableDays]);
+
+        return view('job_type/show')->with(['JobType'=>$JobType,'JobAditionals'=>$JobAditionals,'AvaliableDays'=>$AvaliableDays]);
     }
 
     /**

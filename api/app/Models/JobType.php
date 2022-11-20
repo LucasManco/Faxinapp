@@ -21,4 +21,8 @@ class JobType extends Model
     {
         return $this->belongsTo(Employee::class, 'user_id');
     }
+    public function jobTypeAdditional()
+    {
+        return $this->hasMany(JobTypeAdditional::class);
+    }
 }

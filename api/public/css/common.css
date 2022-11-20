@@ -19,3 +19,11 @@ body .error {
   padding: 0.5rem;
   text-align: center;
 }
+
+.default_address_id {
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 211 238 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}

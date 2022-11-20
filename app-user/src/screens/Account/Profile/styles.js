@@ -9,9 +9,21 @@ export const CustomButton = styled.TouchableOpacity`
     border-radius: 30px;
     justify-content: center;
     align-items: center;
+    margin: 10px;
 `;
 
 export const CustomButtonText = styled.Text`
     font-size: 18px;
     color: #FFF;
+`;
+export const CustomButtonTextSeccundary = styled.Text`
+    font-size: 12px;
+    color: #FFF;
+`;
+export const CustomText = styled.Text`
+    width: 250px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #00BAF4;
+    margin: 0 10px;
 `;

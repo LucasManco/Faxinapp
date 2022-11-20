@@ -24,14 +24,15 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 
 
 Route::middleware('auth')->group(function () {
     Route::resource('address', AddressController::class);
+    Route::put('/address/setDefault/{id}', [AddressController::class, 'setDefault'])->name('address.setDefault');
     Route::resource('user', UserController::class)->except([
         'store','delete'
     ]);
@@ -48,12 +49,10 @@ Route::middleware('auth')->group(function () {
    ]);
     
     Route::resource('job', JobController::class)->except([
-        'show','update', 'delete', 'create', 'show'
+        'update', 'delete', 'create'
    ]);
    Route::put('/job/accept', [JobController::class, 'acceptJob'])->name('job.accept');
-   
-
-
+   Route::get('/history', [JobController::class, 'history'])->name('job.history');
 });
 
 

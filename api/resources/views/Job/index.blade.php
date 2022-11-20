@@ -1,6 +1,6 @@
 <x-account-page>
     <x-slot name="title">
-        Endereços
+        Historico
     </x-slot>
     <x-slot name="content">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -24,7 +24,7 @@
                             <td class="py-4 px-6" >{{$Job->transport}}</td>
                             <td class="py-4 px-6" >{{$Job->tax}}</td>
                             <td class="py-4 px-6" >{{$Job->final_price}}</td>
-                            <td class="py-4 px-6" >{{$Job->status}}</td>
+                            <td class="py-4 px-6" >{{__($Job->status)}}</td>
                             <td class="py-4 px-6" >{{$Job->observation}}</td>
                             <td class="py-4 px-6" >{{$Job->address()}}</td>
                             @if ($Job->status == 'requested')
@@ -57,11 +57,11 @@
                 </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 m-12">
+        {{-- <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 m-12">
             <a class="shadow bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
             href="{{ url(route('job_type.create')) }}">
                 {{ __('Novo Serviço') }}
             </a>
-        </div>
+        </div> --}}
     </x-slot>
 </x-account-page>

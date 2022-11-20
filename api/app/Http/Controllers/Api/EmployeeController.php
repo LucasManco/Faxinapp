@@ -4,7 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\User;
+use App\Models\Address;
+use App\Models\Cidade;
+use App\Models\Estado;
+use App\Models\WorkPlace;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class EmployeeController extends Controller
 {
@@ -15,12 +22,34 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
-
-        foreach ($employees as $employee){
-            $user = $employee->getUser();
-            $employee['name'] = $user->name;
+        $employees = [];
+        $address = Address::find(Auth::user()->default_address_id);
+        // $address = null;
+        if($address){
+            $state = Estado::where('sigla', $address->state)->first();
+            // dd($state);
+            $city = Cidade::where('nome', $address->city)->where('estados_id', $state->id)->first();
+            // dd($city);
+            $workPlaces = WorkPlace::where('city_id', $city->id)->get();
+            // dd($workPlaces);
+            foreach ($workPlaces as $workPlace){
+                
+                $employee_user = User::find($workPlace->user_id);
+                $employee = $employee_user->employee()->first();
+                $employees[] = $employee;
+                $employee['name'] = $employee_user->name;
+                $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+            }
         }
+        else{
+            $employees = Employee::all();
+            foreach ($employees as $employee){
+                $user = $employee->getUser();
+                $employee['name'] = $user->name;
+                $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+            }
+        }
+
 
         return $employees;
     }

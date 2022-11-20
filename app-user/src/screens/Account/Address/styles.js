@@ -6,6 +6,13 @@ export const Container = styled.SafeAreaView`
     background-color: #FFFFFF;
 `;
 
+export const BackButton = styled.TouchableOpacity`
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+`
+
 export const Scroller = styled.ScrollView`
     flex: 1;
     padding: 20px;

@@ -51,7 +51,7 @@ class WorkDay extends Model
             $currentHour = strtotime($workDay->start);
             
 
-            while ( $currentHour <= strtotime($workDay->end)){
+            while ( $currentHour < strtotime($workDay->end)){
                 $AvaliableHours[] = $time = date('H:i', $currentHour);
                 $currentHour = strtotime('+1 hour', $currentHour);
             }

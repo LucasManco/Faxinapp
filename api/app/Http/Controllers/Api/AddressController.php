@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\Address;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class AddressController extends Controller
 {
@@ -15,7 +17,18 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return Address::all();
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
+        $defaultId = Auth::user()->default_address_id;
+        
+        foreach ($addresses as $address){
+            if($address['id'] == $defaultId){
+                $address['isDefault'] = true;
+            }
+            else{
+                $address['isDefault'] = false;
+            }
+        }
+        return $addresses;
     }
 
     /**
@@ -75,5 +88,21 @@ class AddressController extends Controller
     public function destroy($id)
     {
         return Address::destroy($id);
+    }
+
+    public function setDefault($id){
+        Address::find($id)->becomeDefault();
+
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
+        
+        foreach ($addresses as $address){
+            if($address['id'] == $id){
+                $address['isDefault'] = true;
+            }
+            else{
+                $address['isDefault'] = false;
+            }
+        }
+        return $addresses;
     }
 }

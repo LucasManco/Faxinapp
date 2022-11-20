@@ -1,6 +1,6 @@
 <x-account-page>
     <x-slot name="title">
-        Endereços
+        Serviços Prestados
     </x-slot>
     <x-slot name="content">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

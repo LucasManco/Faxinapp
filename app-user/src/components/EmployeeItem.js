@@ -24,6 +24,7 @@ const InfoArea = styled.View`
 `;
 
 const UserName = styled.Text`
+    color: #00BAF4;
     font-size: 17px;
     font-weight: bold;
 `;

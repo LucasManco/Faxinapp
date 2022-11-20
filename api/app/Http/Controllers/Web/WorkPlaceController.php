@@ -22,7 +22,7 @@ class WorkPlaceController extends Controller
     public function index()
     {
         $WorkPlaces = WorkPlace::where('user_id', Auth::user()->id)->get();
-        return view('account/work_place/index')->with([
+        return view('work_place/index')->with([
                                                         'WorkPlaces'=>$WorkPlaces,
                                                      ]);
 
@@ -36,7 +36,7 @@ class WorkPlaceController extends Controller
     {
         $states = Estado::all();
 
-        return view('account/work_place/edit')->with([
+        return view('work_place/edit')->with([
             'states'=>$states
          ]);
 
@@ -49,7 +49,7 @@ class WorkPlaceController extends Controller
     public function edit($id)
     {
         $WorkPlace = WorkPlace::where('user_id', Auth::user()->id)->get();
-        return view('account/work_place/edit')->with('WorkPlace',$WorkPlace);;
+        return view('work_place/edit')->with('WorkPlace',$WorkPlace);;
 
     }
 

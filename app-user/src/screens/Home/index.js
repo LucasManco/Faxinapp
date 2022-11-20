@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, RefreshControl } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+
 import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 
-import {getEmployees} from '../../api/EmployeeApi'
+import {getEmployees, getDefaultAddress} from '../../api/EmployeeApi'
 
 
 import {
@@ -16,11 +17,13 @@ import {
     SearchButton,
 
     LocationArea,
-    LocationInput,
-    LocationFinder,
+    LocationChangeButton,
+    LocationText,
+
 
     LoadingIcon,
     ListArea
+    
 } from './styles';
 
 import EmployeeItem from '../../components/EmployeeItem';
@@ -31,36 +34,16 @@ import MyLocationIcon from '../../assets/my_location.svg';
 export default () => {
     const navigation = useNavigation();
 
-    const [locationText, setLocationText] = useState('');
-    const [coords, setCoords] = useState(null);
+    const [address, setAddress] = useState('');
+    
     const [loading, setLoading] = useState(false);
-    const [list, setList] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [employees, setEmployees] = useState([]);
+    const isFocused = useIsFocused();
 
-    const handleLocationFinder = async () => {
-        setCoords(null);
-        let result = await request(
-            Platform.OS === 'ios' ?
-                PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-                :
-                PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-        );
+    
 
-        if(result == 'granted') {
-            setLoading(true);
-            setLocationText('');
-            setList([]);
-
-            Geolocation.getCurrentPosition((info)=>{
-                setCoords(info.coords);
-                getEmplyees();
-            });
-
-        }
-    }
-
-    const getEmplyees = async () => {
+    const getEmployeesList = async () => {
         setLoading(true);
 
         getEmployees(setEmployees);
@@ -68,21 +51,32 @@ export default () => {
         setLoading(false);
     }
 
+    const getCurrentAddress = async () => {
+        setLoading(true);
+
+        getDefaultAddress(setAddress);
+
+        setLoading(false);
+    }
+
     useEffect(()=>{
-        getEmplyees();
-    }, []);
+        if(isFocused){ 
+            getCurrentAddress();
+            getEmployeesList();
+        }
+    }, [isFocused]);
 
     const onRefresh = () => {
         setRefreshing(false);
-        getEmplyees();
-    }
-
-    const handleLocationSearch = () => {
-        setCoords({});
-        getEmplyees();
+        getEmployeesList();
+        getCurrentAddress();
     }
     
-
+    const changeDefaultAddressHanddler = () => {
+        navigation.navigate(
+            'Address'
+        );
+    }
     return (
         <Container>
             <Scroller refreshControl={
@@ -97,16 +91,9 @@ export default () => {
                 </HeaderArea>
 
                 <LocationArea>
-                    <LocationInput
-                        placeholder="Onde você está?"
-                        placeholderTextColor="#FFFFFF"
-                        value={locationText}
-                        onChangeText={t=>setLocationText(t)}
-                        onEndEditing={handleLocationSearch}
-                    />
-                    <LocationFinder onPress={getEmplyees}>
-                        <MyLocationIcon width="24" height="24" fill="#FFFFFF" />
-                    </LocationFinder>
+                    <LocationChangeButton onPress={changeDefaultAddressHanddler}>
+                        <LocationText>{address}</LocationText>
+                    </LocationChangeButton>
                 </LocationArea>
 
                 {loading &&

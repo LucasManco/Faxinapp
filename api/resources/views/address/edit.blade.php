@@ -16,10 +16,10 @@
 
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-1/3 md:w-1/2 px-4 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+                                <label class="block uppercase tracking-wide text-cyan-400 dark:text-white text-xs font-bold mb-2"
                                     for="postal_code">CEP</label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800  text-white dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
+                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800  text-cyan-400 dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
                                     id="postal_code" name="postal_code" type="text" class=""
                                     value="{{ isset($address) ? $address->postal_code : '' }}">
                                 @error('postal_code')
@@ -29,10 +29,10 @@
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full px-4 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+                                <label class="block uppercase tracking-wide text-cyan-400 dark:text-white text-xs font-bold mb-2"
                                     for="street">Rua</label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-white dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
+                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-cyan-400 dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
                                     id="street" name="street" type="text" class=""
                                     value="{{ isset($address) ? $address->street : '' }}">
 
@@ -43,10 +43,10 @@
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/3 px-4 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+                                <label class="block uppercase tracking-wide text-cyan-400 dark:text-white text-xs font-bold mb-2"
                                     for="number">Numero</label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-white dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
+                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-cyan-400 dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
                                     id="number" name="number" type="number" class=""
                                     value="{{ isset($address) ? $address->number : '' }}">
                                 @error('number')
@@ -54,10 +54,10 @@
                                 @enderror
                             </div>
                             <div class="w-full md:w-1/3 px-4 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+                                <label class="block uppercase tracking-wide text-cyan-400 dark:text-white text-xs font-bold mb-2"
                                     for="city">Cidade</label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-white dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
+                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-cyan-400 dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
                                     id="city" name="city" type="text" class=""
                                     value="{{ isset($address) ? $address->city : '' }}">
                                 @error('city')
@@ -65,10 +65,10 @@
                                 @enderror
                             </div>
                             <div class="w-full md:w-1/3 px-4 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+                                <label class="block uppercase tracking-wide text-cyan-400 dark:text-white text-xs font-bold mb-2"
                                     for="state">Estado</label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-white dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
+                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-cyan-400 dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
                                     id="state" name="state" type="text" class=""
                                     value="{{ isset($address) ? $address->state : '' }}">
                                 @error('state')
@@ -78,10 +78,10 @@
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-4 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+                                <label class="block uppercase tracking-wide text-cyan-400 dark:text-white text-xs font-bold mb-2"
                                     for="country">País</label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-white dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
+                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-cyan-400 dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
                                     id="country" name="country" type="text" class=""
                                     value="{{ isset($address) ? $address->country : '' }}">
                                 @error('country')
@@ -89,10 +89,10 @@
                                 @enderror
                             </div>
                             <div class="w-full md:w-1/2 px-4 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2"
+                                <label class="block uppercase tracking-wide text-cyan-400 dark:text-white text-xs font-bold mb-2"
                                     for="complement">Complemento</label>
                                 <input
-                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-white dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
+                                    class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-cyan-400 dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
                                     id="complement" name="complement" type="text" class=""
                                     value="{{ isset($address) ? $address->complement : '' }}">
                                 @error('complement')

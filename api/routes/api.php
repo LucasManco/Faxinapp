@@ -25,12 +25,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('address', AddressController::class);
+    Route::put('/address/setDefault/{id}', [AddressController::class, 'setDefault']);
     Route::apiResource('employee', EmployeeController::class);
     Route::apiResource('job', JobController::class);
     Route::apiResource('job-type', JobTypeController::class);
     Route::apiResource('not-work-day', NotWorkDayTypeController::class);
     Route::apiResource('review', ReviewController::class);
     Route::apiResource('work-day', WorkDayTypeController::class);
+    
+    Route::get('user/getDefaultAddress', [UserController::class, 'getDefaultAddress']);
+    
 
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

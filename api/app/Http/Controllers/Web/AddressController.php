@@ -19,7 +19,7 @@ class AddressController extends Controller
     public function index()
     {
         $addresses = Address::where('user_id', Auth::user()->id)->get();
-        return view('account/address/index')->with('addresses',$addresses);
+        return view('address/index')->with('addresses',$addresses);
 
     }
     /**
@@ -29,7 +29,7 @@ class AddressController extends Controller
     */
     public function create()
     {
-        return view('account/address/edit');
+        return view('address/edit');
 
     }
     /**
@@ -40,7 +40,7 @@ class AddressController extends Controller
     public function edit($id)
     {
         $address = Address::findOrFail($id);
-        return view('account/address/edit')->with('address',$address);;
+        return view('address/edit')->with('address',$address);;
 
     }
 
@@ -102,5 +102,9 @@ class AddressController extends Controller
 
         return redirect(route('address.index'))->with('msg','Endereço removido com sucesso');
 
+    }
+    public function setDefault($id){
+        Address::find($id)->becomeDefault();
+        return redirect(route('address.index'))->with('msg','Endereço padrão alterado com sucesso');
     }
 }

@@ -29,8 +29,8 @@ class WorkDayController extends Controller
         //     'user_id'   => $employee_id
         // ]);
 
-        // $work_days_db = WorkDay::where('user_id', $employee_id)->get();
-        $work_days_db = WorkDay::all();
+        $work_days_db = WorkDay::where('user_id', $employee_id)->get();
+        // $work_days_db = WorkDay::all();
         $work_days = [];
         foreach ($work_days_db as $work_day_db){
             $work_days[$work_day_db->week_day] = [
@@ -39,7 +39,7 @@ class WorkDayController extends Controller
             ];
         }
         // dd($work_days);
-        return view('account/work_day/index')->with('work_days',$work_days);
+        return view('work_day/index')->with('work_days',$work_days);
     }
     /**
     * Show the form for creating a new resource.
@@ -48,7 +48,7 @@ class WorkDayController extends Controller
     */
     public function create()
     {
-        return view('account/work_day/edit');
+        return view('work_day/edit');
 
     }
     /**
@@ -59,7 +59,7 @@ class WorkDayController extends Controller
     public function edit($id)
     {
         $work_days = WorkDay::where('user_id', Auth::user()->id)->get();
-        return view('account/work_day/edit')->with('work_days',$work_days);;
+        return view('work_day/edit')->with('work_days',$work_days);;
 
     }
 

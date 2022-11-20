@@ -122,5 +122,9 @@
     "Enable" : "Habilitar" ,
     "Regenerate Recovery Codes" : "Gerar novamente os códigos de recuperação" ,
     "Show Recovery Codes" : "Mostrar os códigos de recuperação" ,
-    "Disable" : "Desabilitar"
+    "Disable" : "Desabilitar",
+    "requested" : "Solicitado",
+    "confirmed" : "Confirmado",
+    "done" : "Finalizado",
+    "canceled" : "Cancelado"
 }

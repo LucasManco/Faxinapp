@@ -60,6 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(JobType::class);
     }
-
+    public function workPlace()
+    {
+        return $this->hasMany(WorkPlace::class, 'user_id');
+    }
 
 }

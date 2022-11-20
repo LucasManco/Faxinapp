@@ -5,17 +5,22 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('login') }}">
                         <x-application-logo class="block h-7 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('employee.index')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('employee.index')" :active="request()->routeIs('employee.index')">
                         {{ __('Buscar Faxineira') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('job.history')" :active="request()->routeIs('job.history')">
+                        {{ __('Historico') }}
+                    </x-nav-link>
+                
                 </div>
+                
             </div>
 
             <!-- Settings Dropdown -->
@@ -35,10 +40,26 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
-
-                            <x-dropdown-link :href="route('address.index')">
-                                {{ __('Endereço') }}
+                        <x-dropdown-link :href="route('user.index')">
+                            {{ __('Perfil') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('address.index')">
+                            {{ __('Endereço') }}
+                        </x-dropdown-link>
+                        @if(Auth::user()->isEmployee())
+                            <x-dropdown-link :href="route('job_type.index')">
+                                {{ __('Serviços Prestados') }}
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('work_place.index')">
+                                {{ __('Locais de Atendimento') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('work_day.index')">
+                                {{ __('Dias Trabalhados') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('job.index')">
+                                {{ __('Historico') }}
+                            </x-dropdown-link>
+                        @endif
 
 
                         <form method="POST" action="{{ route('logout') }}">
@@ -72,7 +93,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>

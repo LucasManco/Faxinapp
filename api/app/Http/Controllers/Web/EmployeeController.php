@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\User;
 use App\Models\Address;
+use App\Models\Cidade;
+use App\Models\Estado;
+use App\Models\WorkPlace;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use Illuminate\Support\Facades\Auth;
@@ -20,11 +23,28 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
         //dd($employees->first()->belongsTo(User::class,'user_id')->first());
-        $addresses = Address::where('user_id', Auth::user()->id)->get();
+        $employees = [];
+        $address = Address::find(Auth::user()->default_address_id);
+        if($address){
+            $state = Estado::where('sigla', $address->state)->first();
+            // dd($state);
+            $city = Cidade::where('nome', $address->city)->where('estados_id', $state->id)->first();
+            // dd($city);
+            $workPlaces = WorkPlace::where('city_id', $city->id)->get();
+            // dd($workPlaces);
+            foreach ($workPlaces as $workPlace){
+                $employee_user = User::find($workPlace->user_id);
+                $employee = $employee_user->employee()->first();
+                $employees[$employee->id] = $employee;
+            }
+        }
+        else{
+            $employees = Employee::all();
+        }
         
-        return view('employee/index')->with(['employees'=> $employees, 'addresses'=>$addresses]);
+        
+        return view('employee/index')->with(['employees'=> $employees, 'address'=>$address]);
 
     }
     /**
@@ -34,7 +54,7 @@ class EmployeeController extends Controller
     */
     public function create()
     {
-        return view('account/employee/edit');
+        return view('employee/edit');
 
     }
     /**
@@ -45,7 +65,7 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $Employee = Employee::findOrFail($id);
-        return view('account/employee/edit')->with('Employee',$Employee);;
+        return view('employee/edit')->with('Employee',$Employee);;
 
     }
 
