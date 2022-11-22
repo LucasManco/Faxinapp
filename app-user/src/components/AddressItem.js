@@ -51,7 +51,11 @@ export default ({data, setAddresses}) => {
     const navigation = useNavigation();
 
     const handleAddressClick = () => {
-        alert('address');
+        navigation.navigate(
+            'AddressEdit',{
+                id: data.id
+            }
+        );
     }
     const handleSetDefault = () => {
         setDefaultAddress(data.id, setAddresses);

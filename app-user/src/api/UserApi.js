@@ -42,6 +42,39 @@ export default {
         return json;
     }
 }
+
+export async function getAddress (addressRereived, id){
+    const token = await AsyncStorage.getItem('token');
+    const req = await fetch(`${BASE_API}/address/${id}`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    address = await req.json();    
+    addressRereived(address);
+}
+
+export async function updateAddress (address){
+    console.log('Iniciando Update Address');
+    const token = await AsyncStorage.getItem('token');    
+    const req = await fetch(`${BASE_API}/address/${address.id}`,{
+        method: 'PUT',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        },
+        body: JSON.stringify(address)
+    });
+    address = await req.json();    
+    console.log(address);
+}
+
+
+
 export async function getAddresses (addressRereived){
     const token = await AsyncStorage.getItem('token');
     const req = await fetch(`${BASE_API}/address`,{

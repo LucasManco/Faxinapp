@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, RefreshControl } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 
-import {getAddresses} from '../../../api/UserApi'
+import {getAddresses} from '../../../../api/UserApi'
 
 
 import {
@@ -14,20 +14,14 @@ import {
 
     HeaderArea,
     HeaderTitle,
-    SearchButton,
-
-    LocationArea,
-    LocationChangeButton,
-    LocationText,
-
-
+    
     LoadingIcon,
     ListArea
     
-} from './styles';
+} from '../../../../assets/styles/common';
 
-import AddressItem from '../../../components/AddressItem';
-import BackIcon from '../../../assets/back.svg';
+import AddressItem from '../../../../components/AddressItem';
+import BackIcon from '../../../../assets/back.svg';
 
 
 export default () => {
@@ -38,7 +32,8 @@ export default () => {
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [currentDefaultAddress, setCurrentDefaultAddress] = useState('');
-    
+    const isFocused = useIsFocused();
+
     
 
     const getAddressesList = async () => {
@@ -50,13 +45,17 @@ export default () => {
     }
 
     useEffect(()=>{
-        getAddressesList();
-    }, []);
+        if(isFocused){
+            getAddressesList();
+        }        
+    }, [isFocused]);
 
+    
     const onRefresh = () => {
         setRefreshing(false);
         getAddressesList();
     }
+    
     const handleBackButton = () => {
         navigation.goBack();
     }

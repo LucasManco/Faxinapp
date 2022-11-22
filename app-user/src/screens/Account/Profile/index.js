@@ -47,7 +47,7 @@ export default () => {
 
     const handleAddress = () => {
         navigation.navigate(
-            'Address'
+            'AddressIndex'
         );
     }
 

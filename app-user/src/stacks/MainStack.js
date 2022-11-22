@@ -7,7 +7,8 @@ import Preload from '../screens/Preload';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import EmployeeCreate from '../screens/EmployeeCreate';
-import Address from '../screens/Account/Address';
+import AddressIndex from '../screens/Account/Address/Index';
+import AddressEdit from '../screens/Account/Address/Edit';
 const Stack = createStackNavigator();
 
 export default () => (
@@ -25,6 +26,9 @@ export default () => (
         <Stack.Screen name="Employee" component={Employee} />
 
 
-        <Stack.Screen name="Address" component={Address} />
+        <Stack.Screen name="AddressIndex" component={AddressIndex} />
+        <Stack.Screen name="AddressEdit" component={AddressEdit} />
+
     </Stack.Navigator>
+    
 );

@@ -74,7 +74,7 @@ export default () => {
     
     const changeDefaultAddressHanddler = () => {
         navigation.navigate(
-            'Address'
+            'AddressIndex'
         );
     }
     return (
