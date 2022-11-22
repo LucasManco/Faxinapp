@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import styled from 'styled-components/native'
+import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
+import CheckBox from '@react-native-community/checkbox';
 
-import ExpandIcon from '../assets/expand.svg'
-import NavPrevIcon from '../assets/nav_prev.svg'
-import NavNextIcon from '../assets/nav_next.svg'
+import ExpandIcon from '../assets/expand.svg';
+import NavPrevIcon from '../assets/nav_prev.svg';
+import NavNextIcon from '../assets/nav_next.svg';
+
+import {getEmployeeAgenda, storeJob} from '../api/EmployeeApi';
 
 const Modal = styled.Modal``;
 
@@ -48,6 +51,7 @@ const UserName = styled.Text`
     font-weight: bold;
 `;
 const ServiceInfo = styled.View`
+    width: 100%;
     flex-direction:row;
     align-items: center;
     justify-content: space-between;
@@ -55,12 +59,28 @@ const ServiceInfo = styled.View`
 const ServiceName = styled.Text`
     color: #000000;
     font-size: 16px;
+    font-weight: normal;
+`;
+const ServiceCustomText = styled.Text`
+    color: #000000;
+    font-size: 18px;
     font-weight: bold;
 `;
+const CheckBoxArea = styled.View`
+    border: 1px solid #00BAF4;
+    border-radius: 10px;
+    margin: 5px;
+    padding:0;
+`
 const ServicePrice = styled.Text`
     color: #000000;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
+`;
+const ServiceDescription = styled.Text`
+    color: #000000;
+    font-size: 16px;
+    font-weight: normal;
 `;
 const FinishButton = styled.TouchableOpacity`
     background-color: #00BAF4;
@@ -98,6 +118,26 @@ const DateTitle = styled.Text`
     font-size: 17px;
     font-weight: bold;
 `;
+const DateHourArea = styled.TouchableOpacity`
+    width: 70px;
+    justify-content: center;
+    align-items: center;
+`;
+const DateHour = styled.Text`
+    color: #000000;
+    font-size: 17px;
+    font-weight: bold;
+    padding:10px;
+    border-radius:10px;
+`;
+const SelectedDateHour = styled.Text`
+    color: #000000;
+    font-size: 17px;
+    font-weight: bold;
+    padding:10px;
+    background-color: #00BAF4;
+    border-radius:10px;
+`;
 const DateList = styled.ScrollView``;
 
 const months = [
@@ -124,53 +164,88 @@ const week_days = [
     'Sab'
 ]
 
-export default ({show, setShow, user, service}) => {
-    const navigation = useNavigation();
 
-    const [selectedYear, setSelectedYear] = useState(0);
-    const [selectedMonth, setSelectedMonth] = useState(0);
+export default ({show, setShow, user, service, serviceAdditionals}) => {
+    const navigation = useNavigation();
+    const [agenda, setAgenda] = useState([]);
     const [selectedDay, setSelectedDay] = useState(0);
-    const [selectedHour, setSelectedHour] = useState(null);
-    const [listDays, setListDays] = useState([]);
-    const [listHour, setListHour] = useState([]);
+    const [selectedHour, setSelectedHour] = useState(0);
+
+    const [selectedServiceAdditionals, setSelectedServiceAdditionals] = useState([]);
     
-    useEffect(()=>{
-        let daysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
-        
-    }, [selectedMonth, selectedYear])
+   
 
     useEffect(()=>{
         let today = new Date();
-        setSelectedYear(today.getFullYear());
-        setSelectedMonth(today.getMonth());
-        setSelectedDay(today.getDate());
+        service && getEmployeeAgenda(setAgenda, service.user_id);        
+    }, [service])
 
-    }, [])
+    useEffect(()=>{
+        console.log(agenda);
+    }, [agenda])
 
     const handleLeftDateClick = () => {
-        let mountDate = new Date(selectedYear, selectedMonth, 1);
-        mountDate.setMonth(mountDate.getMonth() - 1);
-        setSelectedYear(mountDate.getFullYear());
-        setSelectedMonth(mountDate.getMonth());
-        setSelectedDay(1);
+        if(selectedDay > 0){
+            setSelectedDay(selectedDay - 1);
+        }        
     }
 
     const handleRightDateClick = () => {
-        let mountDate = new Date(selectedYear, selectedMonth, 1);
-        mountDate.setMonth(mountDate.getMonth() + 1);
-        setSelectedYear(mountDate.getFullYear());
-        setSelectedMonth(mountDate.getMonth());
-        setSelectedDay(1);
+        if(selectedDay + 1  < agenda.length){
+            setSelectedDay(selectedDay + 1);
+        }        
     }
+    const handleSelectHourClick = (key) => {
+        if(selectedHour != key){
+            setSelectedHour(key);
+        }        
+    }
+
+    useEffect(()=>{
+    
+        aux = [];
+        serviceAdditionals && serviceAdditionals.map((item, k)=>(
+            aux.push(false)
+        ));
+        setSelectedServiceAdditionals(aux);
+    
+    }, [serviceAdditionals])
+
+    
 
 
     const handleCloseButton = () => {
         setShow(false);
     }
     const handleFinishClick = () => {
-
+        let aux = [];
+        serviceAdditionals && serviceAdditionals.map((item, k)=>{
+            if(selectedServiceAdditionals[k]){
+                aux.push(item.id);
+            }
+        })
+        
+        storeJob({
+            "job_type_id" : service.id,
+            "selected_date" : agenda[selectedDay].date,
+            "selected_hour" : agenda[selectedDay].hours[selectedHour],
+            "additionals" : aux
+        });
+        setShow(false);
+        navigation.goBack();
+        navigation.reset({
+            routes: [{name: 'Appointments'}]
+        });
+        
     }
 
+    const handleCheckboxChange = (newValue, key) => {
+        let aux = [...selectedServiceAdditionals];
+        aux[key] = newValue;
+        setSelectedServiceAdditionals(aux);
+    }
+
+    
     return(
         <Modal
             transparent={true}
@@ -190,24 +265,57 @@ export default ({show, setShow, user, service}) => {
                     </ModalItem>
                     <ModalItem>
                         <ServiceInfo>
-                            <ServiceName>Placeholder</ServiceName>
-                            <ServicePrice>R$99,99</ServicePrice>
+                            <ServiceName>{service && service.name}</ServiceName>
+                            <ServicePrice>R$ {service && service.price.toFixed(2)}</ServicePrice>
                         </ServiceInfo>
                     </ModalItem>
+                    
+                    <ModalItem>
+                        <ServiceInfo>
+                            <ServiceDescription>{service && service.description}</ServiceDescription>
+                        </ServiceInfo>
+                    </ModalItem>
+                    
+                    {
+                        serviceAdditionals && serviceAdditionals.length > 0 &&
+                            <ModalItem>
+                                <ServiceCustomText>Adicionais</ServiceCustomText>
+                                {serviceAdditionals.map((item, k)=>(
+                                    <ServiceInfo key={k}>
+                                        <CheckBoxArea>
+                                            <CheckBox
+                                                disabled={false}
+                                                value={selectedServiceAdditionals[k]}
+                                                onValueChange={(newValue) => handleCheckboxChange(newValue, k)}
+                                            />
+                                        </CheckBoxArea>
+                                        <ServiceName>{item.name}</ServiceName>
+                                        <ServicePrice>R$ {item.price.toFixed(2)}</ServicePrice>
+                                    </ServiceInfo>
+                                ))}
+                            </ModalItem>
+                    }
                     <ModalItem>
                         <DateInfo>
                             <DatePrevArea onPress={handleLeftDateClick}>
                                 <NavPrevIcon width="35" height="35" fill="#000000" />
                             </DatePrevArea>
                             <DateTitleArea>
-                                <DateTitle>{months[selectedMonth]} {selectedYear}</DateTitle>
+                                <DateTitle>{agenda && agenda[selectedDay] && agenda[selectedDay].date}</DateTitle>
                             </DateTitleArea>
                             <DateNextArea onPress={handleRightDateClick}>
                                 <NavNextIcon width="35" height="35" fill="#000000" />
                             </DateNextArea>
                         </DateInfo>
                         <DateList horizontal={true} showsHorizontalScrollIndicator={false}>
-
+                            {agenda && agenda[selectedDay] && agenda[selectedDay].hours.map((item,k)=>(
+                                <DateHourArea onPress={() => handleSelectHourClick(k)} key={k}>
+                                    {selectedHour == k?
+                                        <SelectedDateHour>{item}</SelectedDateHour>:
+                                        <DateHour>{item}</DateHour>
+                                    }
+                                </DateHourArea>
+                            ))}
                         </DateList>
                     </ModalItem>                        
                     <FinishButton onPress={handleFinishClick}>

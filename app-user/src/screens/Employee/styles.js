@@ -1,39 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-export const Container = styled.SafeAreaView`
-    flex: 1;
-    background-color: #ffffff;
 
-`;
-
-export const CustomButton = styled.TouchableOpacity`
-    height: 60px;
-    background-color: #00BAF4;
-    border-radius: 30px;
-    justify-content: center;
-    align-items: center;
-`;
-
-export const CustomButtonText = styled.Text`
-    font-size: 18px;
-    color: #FFF;
-`;
-export const Scroller = styled.View`
-    flex: 1;
-
-`;
-
-export const Header = styled.View`
-    height:200px;
-    background-color: #00BAF4;
-`;
-
-export const PageBody = styled.View`
-    background-color: #ffffff;
-    border-top-left-radius: 50px;
-    margin-top: -50px;
-`;
 
 export const UserInfoArea = styled.View`
     flex-direction: row;
@@ -121,6 +89,7 @@ export const ServiceChooseBtnText = styled.Text`
 
 export const TestimonialArea = styled.View`
     margin-top: 30px;
+    padding:20px;
 `;
 
 export const TestimonialItem = styled.View`

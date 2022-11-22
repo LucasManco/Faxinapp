@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Container, LoadingIcon } from './styles';
+import { ContainerCenter, LoadingIcon } from '../../assets/styles/common';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -36,9 +36,9 @@ export default () => {
     }, []);
 
     return (
-        <Container>
+        <ContainerCenter>
             <FaxinaLogo width="100%" height="160" />
             <LoadingIcon size="large" color="#FFFFFF" />
-        </Container>
+        </ContainerCenter>
     );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { Container } from './styles';
+import { Container } from '../../assets/styles/common';
 
 export default () => {
     return (

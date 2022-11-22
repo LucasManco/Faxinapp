@@ -10,15 +10,20 @@ import {getAddresses} from '../../../../api/UserApi'
 import {
     Container,
     BackButton,
-    Scroller,
-
-    HeaderArea,
-    HeaderTitle,
+    NoPaddingScroller,
+    Header,
     
     LoadingIcon,
-    ListArea
+    ListArea,
+    PageBody,
+    CustomButton,
+    CustomButtonText
     
 } from '../../../../assets/styles/common';
+
+import {
+    AddressTitle
+}from './styles';
 
 import AddressItem from '../../../../components/AddressItem';
 import BackIcon from '../../../../assets/back.svg';
@@ -59,31 +64,40 @@ export default () => {
     const handleBackButton = () => {
         navigation.goBack();
     }
+    const handleNewAddressButton = () => {
+        navigation.navigate(
+            'AddressCreate'
+        );
+    }
     return (
         <Container>
             <BackButton onPress={handleBackButton}>
                 <BackIcon width="44px" height="44px" fill="#FFFFFF" />
             </BackButton>
 
-            <Scroller refreshControl={
+            <NoPaddingScroller refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
+                <Header>
+                    
+                </Header>
                 
-                <HeaderArea>
-                    <HeaderTitle numberOfLines={2}>Endereço de Entrega</HeaderTitle>
-                </HeaderArea>
-
-                {loading &&
-                    <LoadingIcon size="large" color="#FFFFFF" />
-                }
-                
-                <ListArea>
-                    {addresses.map((item, k)=>(
-                        <AddressItem key={k} data={item} setAddresses={setAddresses}/>
-                    ))}
-                </ListArea>
-
-            </Scroller>
+                <PageBody>
+                    <AddressTitle numberOfLines={2}>Endereço de Entrega</AddressTitle>
+                    {loading &&
+                        <LoadingIcon size="large" color="#FFFFFF" />
+                    }
+                    <CustomButton onPress={handleNewAddressButton}>
+                        <CustomButtonText>Novo Endereço</CustomButtonText>
+                    </CustomButton>
+                    
+                    <ListArea>
+                        {addresses.map((item, k)=>(
+                            <AddressItem key={k} data={item} setAddresses={setAddresses}/>
+                        ))}
+                    </ListArea>
+                </PageBody>
+            </NoPaddingScroller>
         </Container>
     );
 }

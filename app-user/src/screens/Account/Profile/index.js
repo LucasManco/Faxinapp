@@ -1,17 +1,17 @@
 import React, { useState , useEffect } from 'react';
 import { Text } from 'react-native';
-import { Container } from './styles';
 import UserApi from '../../../api/UserApi';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
 import {
+    Container,
     CustomButton,
     CustomButtonText,
     CustomButtonTextSeccundary,
     CustomText
-} from './styles';
+} from '../../../assets/styles/common';
 
 
 export default () => {
@@ -24,7 +24,6 @@ export default () => {
      useEffect(()=>{
         const checkToken = async () => {
             const token = await AsyncStorage.getItem('token');
-            console.log(token);
             if(token){
                 let json = await UserApi.checkToken(token);
                 if(json.cpf){
@@ -41,8 +40,10 @@ export default () => {
 
 
     const handleSignOut = () => {
-        console.log('logout');
-        //auth().signOut();
+        UserApi.logout();
+        navigation.navigate(
+            'Preload'
+        );
     }
 
     const handleAddress = () => {

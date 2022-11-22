@@ -5,15 +5,18 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { UserContext } from '../../contexts/UserContext';
 
+
 import {
     Container,
     InputArea,
     CustomButton,
-    CustomButtonText,
+    CustomButtonText
+} from '../../assets/styles/common';
+import {
     SignMessageButton,
     SignMessageButtonText,
     SignMessageButtonTextBold
-} from './styles';
+} from '../../assets/styles/sign';
 
 
 /**

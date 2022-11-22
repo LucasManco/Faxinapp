@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, RefreshControl } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { request, PERMISSIONS } from 'react-native-permissions';
-import Geolocation from '@react-native-community/geolocation';
 
-import {getAddress, updateAddress} from '../../../../api/UserApi'
+import {storeAddress} from '../../../../api/UserApi'
 
 
 import {    
@@ -16,15 +14,14 @@ import {
     NoPaddingScroller,
     Header,
     PageBody,
-    HeaderArea,
-    HeaderTitle,
+    
 
     Input,
     InputArea,
     CustomButton,
     CustomButtonText,
     LoadingIcon,
-    ListArea
+    
     
 } from '../../../../assets/styles/common';
 
@@ -32,7 +29,6 @@ import {
     AddressTitle
 }from './styles';
 
-import AddressItem from '../../../../components/AddressItem';
 import BackIcon from '../../../../assets/back.svg';
 
 
@@ -43,13 +39,7 @@ export default () => {
 
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const [currentDefaultAddress, setCurrentDefaultAddress] = useState('');
-
-    const [addressInfo, setAddressInfo] = useState({
-        id: route.params.id
-    });
-
-    const [address, setAddress] = useState('');
+    
     const [postalCodeField, setPostalCodeField] = useState('');
     const [streetField, setStreetField] = useState('');
     const [numberField, setNumberField] = useState('');
@@ -57,30 +47,6 @@ export default () => {
     const [stateField, setStateField] = useState('');
     const [complementField, setComplementField] = useState('');
 
-    const getAddressesList = async () => {
-        setLoading(true);
-        getAddress(setAddress, addressInfo.id);
-        updateAddressFields();        
-        setLoading(false);
-    }
-
-    const updateAddressFields = () => {
-        setPostalCodeField(address.postal_code);
-        setStreetField(address.street);
-        setNumberField(address.number);
-        setCityField(address.city);
-        setStateField(address.state);
-        setComplementField(address.complement);
-    }
-
-    useEffect(()=>{
-        updateAddressFields();
-    }, [address]);
-
-
-    useEffect(()=>{
-        getAddressesList();
-    }, []);
 
     const onRefresh = () => {
         setRefreshing(false);
@@ -90,15 +56,16 @@ export default () => {
         navigation.goBack();
     }
     const handleSaveClick = () => {
-        addressToSend = address;
+        addressToSend = {};
         addressToSend.postal_code = postalCodeField;
         addressToSend.street = streetField;
         addressToSend.number = numberField;
         addressToSend.city = cityField;
         addressToSend.state = stateField;
         addressToSend.complement = complementField;
+        addressToSend.country = 'Brasil';
 
-        updateAddress(addressToSend);
+        storeAddress(addressToSend);
         navigation.goBack();
 
     }

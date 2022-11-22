@@ -27,14 +27,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('address', AddressController::class);
     Route::put('/address/setDefault/{id}', [AddressController::class, 'setDefault']);
     Route::apiResource('employee', EmployeeController::class);
+    Route::get('employee/job-list/{id}', [EmployeeController::class, 'JobTypeList']);
+    Route::get('employee/agenda/{id}', [EmployeeController::class, 'Agenda']);
     Route::apiResource('job', JobController::class);
     Route::apiResource('job-type', JobTypeController::class);
+    Route::get('job-type/additionals/{id}', [JobTypeController::class, 'JobTypeAdditionals']);
     Route::apiResource('not-work-day', NotWorkDayTypeController::class);
     Route::apiResource('review', ReviewController::class);
     Route::apiResource('work-day', WorkDayTypeController::class);
     
     Route::get('user/getDefaultAddress', [UserController::class, 'getDefaultAddress']);
-    
+
+    Route::post('logout', [UserController::class, 'logout']);
+
 
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

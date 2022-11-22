@@ -42,125 +42,57 @@ export async function getEmployee(id) {
     employeeRereived(employeeList);
 }
 
-export async function getEmployeeServicesList(uid) {
-    var servicesList = [
-        {
-            nome: "Serviço 1",
-            preco: "13.3"
-        },
-        {
-            nome: "Serviço 2",
-            preco: "99.9"
-        },
-        {
-            nome: "Serviço 3",
-            preco: "91"
-        },
-        {
-            nome: "Serviço 4",
-            preco: "99.999"
-        },
-        {
-            nome: "Serviço 5",
-            preco: "11199.11"
+export async function getEmployeeServicesList(jobListRereived, id) {
+    var jobTypeList = [];
+    const token = await AsyncStorage.getItem('token');
+
+    const req = await fetch(`${BASE_API}/employee/job-list/${id}`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
         }
-    ]
-    return servicesList;
+    });
+    
+    jobTypeList = await req.json();    
+    jobListRereived(jobTypeList);
 }
 
-export async function getEmployeeAgenda(uid) {
+export async function getEmployeeAgenda(agendaRereived, id) {
 
-    var servicesList = [
-        {
-            date: "2022-05-12",
-            hours: [
-                "09:30",
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00"
-            ]
+    var dateList = [];
+    const token = await AsyncStorage.getItem('token');
+
+    const req = await fetch(`${BASE_API}/employee/agenda/${id}`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    console.log('AAAA');
+    dateList = await req.json();    
+    agendaRereived(dateList);
+
+}
+
+export async function storeJob(job) {
+    var dateList = [];
+    const token = await AsyncStorage.getItem('token');
+
+    const req = await fetch(`${BASE_API}/job`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
         },
-        {
-            date: "2022-05-13",
-            hours: [
-                "09:00",
-                "09:30",
-                "10:00",
-                "11:00",
-                "11:30",
-                "12:00"
-            ]
-        },
-        {
-            date: "2022-05-14",
-            hours: [
-                "09:00",
-                "09:30",
-                "10:00",
-                "11:30",
-                "12:00"
-            ]
-        },
-        {
-            date: "2022-05-15",
-            hours: [
-                "09:00",
-                "09:30",
-                "10:00",
-                "10:30",
-                "12:00"
-            ]
-        },
-        {
-            date: "2022-05-16",
-            hours: [
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00"
-            ]
-        },
-        {
-            date: "2022-05-17",
-            hours: [
-                "09:00",
-                "09:30",
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00"
-            ]
-        },
-        {
-            date: "2022-05-18",
-            hours: [
-                "09:00",
-                "09:30",
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00"
-            ]
-        },
-        {
-            date: "2022-05-19",
-            hours: [
-                "09:00",
-                "09:30",
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00"
-            ]
-        },
-    ]
-    return servicesList;
+        body: JSON.stringify(job)
+    });
+    const json = await req.json();        
+    return json;
 }
 
 export async function getDefaultAddress(addressRereived){

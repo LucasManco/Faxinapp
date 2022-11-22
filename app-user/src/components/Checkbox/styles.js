@@ -11,7 +11,7 @@ export const CheckboxContainer = styled.View`
     align-items: center;
     margin-bottom: 15px;
 `;
-// export const HiddenCheckbox = styled.input.attrs({ type: "checkbox" })``;
+export const HiddenCheckbox = styled.Input.attrs({ type: "checkbox" })``;
 
 export const Text = styled.Text`
 `;

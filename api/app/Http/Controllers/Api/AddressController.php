@@ -45,11 +45,14 @@ class AddressController extends Controller
             'city' => 'required|string',
             'state' => 'required|string',
             'postal_code' => 'required|string',
-            'county' => 'required|string',
+            'country' => 'required|string',
             'complement' => 'required|string'
         ]);
 
-        return Address::create($request->all());
+        $data = $request->all();
+        $data["user_id"] = Auth::user()->id;
+
+        return Address::create($data);
     }
 
     /**
@@ -90,6 +93,11 @@ class AddressController extends Controller
         return Address::destroy($id);
     }
 
+    /**
+     * 
+     * Set a new default address
+     * 
+     */
     public function setDefault($id){
         Address::find($id)->becomeDefault();
 
@@ -105,4 +113,5 @@ class AddressController extends Controller
         }
         return $addresses;
     }
+
 }

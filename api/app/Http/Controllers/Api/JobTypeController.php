@@ -73,4 +73,18 @@ class JobTypeController extends Controller
     {
         return JobType::destroy($id);
     }
+
+     /**
+     * Return a List of JobTypes from a Employee
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function JobTypeAdditionals($id)
+    {
+        $JobType = JobType::find($id);
+        $JobAditionals = $JobType->jobTypeAdditional()->get();
+
+        return $JobAditionals;
+    }
 }

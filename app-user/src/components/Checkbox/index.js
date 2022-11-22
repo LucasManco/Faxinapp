@@ -16,22 +16,11 @@ export default () => {
 
     
    return (
-        <CheckboxContainer 
-        checked={checked}
-        onClick={handleCheckboxChange}
-        >
-            {/* <HiddenCheckbox 
-            onChange={handleCheckboxChange}
+        
+         <input type="checkbox" 
+            callback={handleCheckboxChange}
             checked={checked}
-            />
-            <StyledCheckbox checked={checked}/> */}
-            <CheckBox
-            disabled={false}
-            value={isDoctor}
-            onValueChange={setIsDoctor}
-            tintColors={{ true: '#FC8F00' }}
-            />
-            <Text checked={checked}>Instagram</Text>
-        </CheckboxContainer>
+         />        
+        
    );
 }

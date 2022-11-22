@@ -40,6 +40,20 @@ export default {
         });
         const json = await req.json();
         return json;
+    },
+    logout: async () =>{
+        const token = await AsyncStorage.getItem('token');
+
+        const req = await fetch(`${BASE_API}/logout`,{
+            method: 'POST',
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${token}`
+            }
+        });
+        const json = await req.json();
+        return json;
     }
 }
 
@@ -58,7 +72,6 @@ export async function getAddress (addressRereived, id){
 }
 
 export async function updateAddress (address){
-    console.log('Iniciando Update Address');
     const token = await AsyncStorage.getItem('token');    
     const req = await fetch(`${BASE_API}/address/${address.id}`,{
         method: 'PUT',
@@ -70,9 +83,22 @@ export async function updateAddress (address){
         body: JSON.stringify(address)
     });
     address = await req.json();    
-    console.log(address);
 }
 
+
+export async function storeAddress (address){
+    const token = await AsyncStorage.getItem('token');    
+    const req = await fetch(`${BASE_API}/address`,{
+        method: 'POST',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        },
+        body: JSON.stringify(address)
+    });
+    address = await req.json();    
+}
 
 
 export async function getAddresses (addressRereived){

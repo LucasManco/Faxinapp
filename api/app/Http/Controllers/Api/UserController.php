@@ -26,6 +26,14 @@ class UserController extends Controller
         }
         return response()->json('Usuario Invalido', 401);    
     }
+
+    public function logout(Request $request)
+    {
+        if(Auth::user()->currentAccessToken()->delete()){
+            return response()->json('Logout realizado com sucesspo.',200);
+        }
+        return response()->json('Erro ao Processar a Informação', 401);    
+    }
    
 
 

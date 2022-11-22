@@ -8,10 +8,14 @@ import {
     Container,
     InputArea,
     CustomButton,
-    CustomButtonText,
+    CustomButtonText
+}from '../../assets/styles/common';
+
+import {
     SignMessageButton,
     SignMessageButtonTextBold
-} from './styles';
+}from '../../assets/styles/sign';
+
 
 // import { GoogleSignin } from '@react-native-google-signin/google-signin';
 

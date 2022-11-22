@@ -7,11 +7,13 @@ import {
     Container,
     InputArea,
     CustomButton,
-    CustomButtonText,
+    CustomButtonText
+} from '../../assets/styles/common';
+import {
     SignMessageButton,
     SignMessageButtonText,
     SignMessageButtonTextBold
-} from './styles';
+} from '../../assets/styles/sign';
 
 import SignInput from '../../components/SignInput';
 import FaxinaLogo from '../../assets/logo/04.svg';
@@ -33,8 +35,7 @@ export default () => {
     const handleSignClick = async () => {
         if(nameField != '' && emailField != '' && passwordField != '') {
             let json = await UserApi.signUp(nameField, emailField, passwordField);
-            console.log(json);
-
+            
             if(json.plainTextToken){
                 await AsyncStorage.setItem('token', json.plainTextToken);
 

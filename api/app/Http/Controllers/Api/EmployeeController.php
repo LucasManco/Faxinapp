@@ -9,6 +9,7 @@ use App\Models\Address;
 use App\Models\Cidade;
 use App\Models\Estado;
 use App\Models\WorkPlace;
+use App\Models\WorkDay;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -107,6 +108,40 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         return Employee::destroy($id);
+    }
+
+    /**
+     * Return a List of JobTypes from a Employee
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function JobTypeList($id)
+    {
+        $job_type = Employee::find($id)->getUser()->jobType()->get();
+
+        return $job_type;
+    }
+    
+    /**
+     * Return the avaliable hour in the next week agenda
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function Agenda($id)
+    {
+        $job_type = User::find($id)->jobType()->first();
+        
+        if($job_type){
+            $AvaliableDays = WorkDay::getAvaliableDaysApi($job_type->user_id);
+        }
+        else{
+            return 'Usuario não encontrado';
+        }
+        
+
+        return $AvaliableDays;
     }
 }
 

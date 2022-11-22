@@ -16,15 +16,14 @@ import {
     HeaderTitle,
     SearchButton,
 
+    LoadingIcon,
+    ListArea,
     LocationArea,
     LocationChangeButton,
     LocationText,
-
-
-    LoadingIcon,
-    ListArea
     
-} from './styles';
+} from '../../assets/styles/common';
+
 
 import EmployeeItem from '../../components/EmployeeItem';
 
@@ -101,7 +100,7 @@ export default () => {
                 }
                 
                 <ListArea>
-                    {employees.map((item, k)=>(
+                    {employees && employees.map((item, k)=>(
                         <EmployeeItem key={k} data={item} />
                     ))}
                 </ListArea>

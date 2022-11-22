@@ -10,6 +10,8 @@ const Container = styled.SafeAreaView`
     flex: 1;
     background-color: #FFFFFF;
     border: 1px solid #00BAF4;
+    margin-left: 30px;
+    margin-right: 20px;
     margin-bottom: 20px;
     border-radius: 20px;
     padding: 15px;

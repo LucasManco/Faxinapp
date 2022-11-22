@@ -2,23 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet,Text,View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
-import {getEmployeeServicesList} from '../../api/EmployeeApi'
-import Stars from '../../components/Stars'
-import EmployeeModal from '../../components/EmployeeModal'
+import {getEmployeeServicesList} from '../../api/EmployeeApi';
+import {getService, getServiceAdditionals} from '../../api/JobTypeApi';
+import Stars from '../../components/Stars';
+import EmployeeModal from '../../components/EmployeeModal';
 
-import { 
+import{
     Container,
-    Scroller,
-    Header,
+    NoPaddingScroller,
     PageBody,
+    Header,
+    BackButton,
+    LoadingIcon, 
+} from '../../assets/styles/common';
+
+import {  
     UserInfoArea,
     UserAvatar,
     UserInfo,
     UserInfoName,
     UserFavButton,
-    BackButton,
-    LoadingIcon,
-    
+
     ServiceArea,
     ServicesTitle,
     ServiceItem,
@@ -47,8 +51,9 @@ export default () => {
 
     const [loading, setLoading] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
+    const [selectedServiceAdditionals, setSelectedServiceAdditionals] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
+    const [services, setServices] = useState(false);
 
     const [userInfo, setUserInfo] = useState({
         id: route.params.id,
@@ -57,23 +62,32 @@ export default () => {
         avatar: route.params.avatar,
     });
 
-    const services = getEmployeeServicesList(userInfo.id);
+    useEffect(()=>{
+        
+        getEmployeeServicesList(setServices, userInfo.id);    
+
+    }, []);
+
+    
 
     const handleBackButton = () => {
         navigation.goBack();
     }
 
     const handleServiceChoose = (key) => {
-        setSelectedService(key);
+        
+        getService(setSelectedService, key);
+        getServiceAdditionals(setSelectedServiceAdditionals, key);
+        
         setShowModal(true);
     }
 
     return (
         <Container>
-            <Scroller>
-                <Header>
+            <NoPaddingScroller>
+            <Header>
 
-                </Header>
+            </Header>
                 <PageBody>
                     <UserInfoArea>
                         <UserAvatar source={{uri:userInfo.avatar}}/>
@@ -92,57 +106,18 @@ export default () => {
                     {services &&
                         <ServiceArea>
                             <ServicesTitle>Lista de Serviços</ServicesTitle>
-                    
-                            <ServiceItem key="0">
-                                <ServiceInfo>
-                                    <ServiceName>Serviço 01</ServiceName>
-                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
-                                    <ServicePrice>R$ 14,90</ServicePrice>
-                                </ServiceInfo>
-                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
-                                    <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
-                                </ServiceChooseButton>
-                            </ServiceItem>
-                            <ServiceItem key="1">
-                                <ServiceInfo>
-                                    <ServiceName>Serviço 02</ServiceName>
-                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
-                                    <ServicePrice>R$ 99,90</ServicePrice>
-                                </ServiceInfo>
-                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
-                                    <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
-                                </ServiceChooseButton>
-                            </ServiceItem>
-                            <ServiceItem key="2">
-                                <ServiceInfo>
-                                    <ServiceName>Serviço 03</ServiceName>
-                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
-                                    <ServicePrice>R$ 99,90</ServicePrice>
-                                </ServiceInfo>
-                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
-                                    <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
-                                </ServiceChooseButton>
-                            </ServiceItem>
-                            <ServiceItem key="3">
-                                <ServiceInfo>
-                                    <ServiceName>Serviço 04</ServiceName>
-                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
-                                    <ServicePrice>R$ 99,90</ServicePrice>
-                                </ServiceInfo>
-                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
-                                    <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
-                                </ServiceChooseButton>
-                            </ServiceItem>
-                            <ServiceItem key="4">
-                                <ServiceInfo>
-                                    <ServiceName>Serviço 05</ServiceName>
-                                    <ServiceDescription>Quisque commodo dignissim efficitur. In hac habitasse platea </ServiceDescription>
-                                    <ServicePrice>R$ 99,90</ServicePrice>
-                                </ServiceInfo>
-                                <ServiceChooseButton onPress={()=>handleServiceChoose()}>
-                                    <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
-                                </ServiceChooseButton>
-                            </ServiceItem>
+                            {services.map((item, k)=>(
+                                <ServiceItem key={k}>
+                                    <ServiceInfo>
+                                        <ServiceName>{item.name}</ServiceName>
+                                        <ServiceDescription numberOfLines={3}>{item.description}</ServiceDescription>
+                                        <ServicePrice>R$ {item.price.toFixed(2)}</ServicePrice>
+                                    </ServiceInfo>
+                                    <ServiceChooseButton onPress={()=>handleServiceChoose(item.id)}>
+                                        <ServiceChooseBtnText>Agendar</ServiceChooseBtnText>
+                                    </ServiceChooseButton>
+                                </ServiceItem>
+                            ))}
                         </ServiceArea>
                     }
                     <TestimonialArea>
@@ -165,10 +140,19 @@ export default () => {
                                     Aliquam erat volutpat.
                                 </TestimonialBody>                                
                             </TestimonialItem>
+                            <TestimonialItem key="2">
+                                <TestimonialInfo>
+                                    <TestimonialName>iobgvopiulbgi da Silva</TestimonialName>
+                                    <Stars stars="5" showNumber={false} />
+                                </TestimonialInfo>
+                                <TestimonialBody>
+                                    iogvbpiyugbophbnpç
+                                </TestimonialBody>                                
+                            </TestimonialItem>
                         </Swiper>
                     </TestimonialArea>
                 </PageBody>
-            </Scroller>
+            </NoPaddingScroller>
             <BackButton onPress={handleBackButton}>
                 <BackIcon width="44px" height="44px" fill="#FFFFFF" />
             </BackButton>
@@ -178,6 +162,7 @@ export default () => {
                 setShow={setShowModal}
                 user={userInfo}
                 service={selectedService}
+                serviceAdditionals = {selectedServiceAdditionals}
             />
         </Container>
     );

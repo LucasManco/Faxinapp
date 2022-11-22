@@ -4,15 +4,19 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { UserContext } from '../../contexts/UserContext';
 
+
+
 import {
-    Container,
-    InputArea,
+    ContainerCenter,
+    InputAreaCol,
     CustomButton,
-    CustomButtonText,
+    CustomButtonText
+} from '../../assets/styles/common';
+import {
     SignMessageButton,
     SignMessageButtonText,
     SignMessageButtonTextBold
-} from './styles';
+} from '../../assets/styles/sign';
 
 // import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
@@ -82,10 +86,10 @@ export default () => {
     
 
     return (
-        <Container>
+        <ContainerCenter>
             <FaxinaLogo width="100%" height="160" />
 
-            <InputArea>
+            <InputAreaCol>
                 <SignInput
                     IconSvg={EmailIcon}
                     placeholder="Digite seu e-mail"
@@ -104,7 +108,7 @@ export default () => {
                 <CustomButton onPress={handleSignClick}>
                     <CustomButtonText>LOGIN</CustomButtonText>
                 </CustomButton>
-            </InputArea>
+            </InputAreaCol>
             
              {/* <CustomButton onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}>
                 <CustomButtonText>Google Sign-In</CustomButtonText>
@@ -118,6 +122,6 @@ export default () => {
             {/* <SignMessageButton onPress={handleMissPasswordButtonClick}>
                 <SignMessageButtonText>Esqueceu sua Senha?</SignMessageButtonText>
             </SignMessageButton> */}
-        </Container>
+        </ContainerCenter>
     );
 }
