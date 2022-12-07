@@ -21,6 +21,7 @@ const Avatar = styled.Image`
 const InfoArea = styled.View`
     margin-left: 20px;
     justify-content: space-between;
+    max-width:70%;
 `;
 
 const UserName = styled.Text`
@@ -42,7 +43,26 @@ const SeeProfileButtonText = styled.Text`
     font-size: 13px;
     color: #00BAF4;
 `;
+const CategorieArea = styled.View`
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:row;
+    max-width: 100%;
+    
+`;
+const CategorieItem = styled.View`
 
+    border: 1px solid #00BAF4;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+    margin:5px;
+`;
+const CategorieText = styled.Text`
+    font-size: 13px;
+    color: #00BAF4;
+`;
 
 export default ({data}) => {
     const navigation = useNavigation();
@@ -52,9 +72,11 @@ export default ({data}) => {
             id: data.id,
             name: data.name,
             stars: data.stars,
-            avatar: data.avatar
+            avatar: data.avatar,
+            description: data.description
         });
     }
+    let categories =  JSON.parse(data.categories);
     return (
         <Area onPress={handleEmployeeClick}>
             <Avatar source={{uri: data.avatar}} />
@@ -62,9 +84,21 @@ export default ({data}) => {
                 <UserName>{data.name}</UserName>
                 <Stars stars={data.stars} showNumber={true} />
 
-                <SeeProfileButton>
+                {/* <SeeProfileButton>
                     <SeeProfileButtonText>Ver Perfil</SeeProfileButtonText>
-                </SeeProfileButton>
+                </SeeProfileButton> */}
+                
+                <CategorieArea>
+                    {categories && categories.map((item, k)=>(
+                        <CategorieItem key={k}>
+                                <CategorieText>
+                                    {item}
+                                </CategorieText>
+                        </CategorieItem>
+                        
+                    ))}
+                </CategorieArea>
+
             </InfoArea>
         </Area>
     );

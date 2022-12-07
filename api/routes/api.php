@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('address', AddressController::class);
     Route::put('/address/setDefault/{id}', [AddressController::class, 'setDefault']);
+    Route::get('/address/getEmployeesByDate', [AddressController::class, 'getEmployeesByDate']);
     Route::apiResource('employee', EmployeeController::class);
     Route::get('employee/job-list/{id}', [EmployeeController::class, 'JobTypeList']);
     Route::get('employee/agenda/{id}', [EmployeeController::class, 'Agenda']);
@@ -39,6 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/getDefaultAddress', [UserController::class, 'getDefaultAddress']);
 
     Route::post('logout', [UserController::class, 'logout']);
+    Route::post('addFavorite/{id}', [UserController::class, 'addFavorite']);
+    Route::post('removeFavorite/{id}', [UserController::class, 'removeFavorite']);
+    Route::get('getIsFavorited/{id}', [UserController::class, 'getIsFavorited']);
+    Route::get('favorites', [UserController::class, 'getFavorites']);
 
 
 });

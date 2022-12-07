@@ -88,12 +88,19 @@ export default () => {
                         <SearchIcon width="26" height="26" fill="#FFFFFF" />
                     </SearchButton>
                 </HeaderArea>
-
-                <LocationArea>
-                    <LocationChangeButton onPress={changeDefaultAddressHanddler}>
-                        <LocationText>{address}</LocationText>
-                    </LocationChangeButton>
-                </LocationArea>
+                {address ?
+                    <LocationArea>
+                        <LocationChangeButton onPress={changeDefaultAddressHanddler}>
+                            <LocationText>{address}</LocationText>
+                        </LocationChangeButton>
+                    </LocationArea>
+                    :
+                    <LocationArea>
+                        <LocationChangeButton onPress={changeDefaultAddressHanddler}>
+                            <LocationText>Defina um Endereço</LocationText>
+                        </LocationChangeButton>
+                    </LocationArea>
+                }
 
                 {loading &&
                     <LoadingIcon size="large" color="#FFFFFF" />

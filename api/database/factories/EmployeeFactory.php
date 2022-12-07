@@ -25,7 +25,7 @@ class EmployeeFactory extends Factory
             'transport_value' => 0,
             'description' => $faker->realText(180),
             'profile_image' => "/images/profile/" . rand(1,20) . ".jpg",
-            'categories' => json_encode([$categories[rand(0,count($categories)-1)]]),
+            'categories' => json_encode([$categories[rand(0,count($categories)-1)],$categories[rand(0,count($categories)-1)]]),
         ];
     }
 }

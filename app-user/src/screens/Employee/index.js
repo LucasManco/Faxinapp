@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet,Text,View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
-import {getEmployeeServicesList} from '../../api/EmployeeApi';
+import {getEmployeeServicesList, getIsFavorited} from '../../api/EmployeeApi';
 import {getService, getServiceAdditionals} from '../../api/JobTypeApi';
+import {addFavorites, removeFavorites} from '../../api/UserApi';
+
 import Stars from '../../components/Stars';
 import EmployeeModal from '../../components/EmployeeModal';
 
@@ -41,6 +43,8 @@ import {
  } from './styles';
 
 import FavoriteIcon from '../../assets/favorite.svg'
+import FavoriteFullIcon from '../../assets/favorite_full.svg'
+
 import BackIcon from '../../assets/back.svg'
 import NavPrevIcon from '../../assets/nav_prev.svg'
 import NavNextIcon from '../../assets/nav_next.svg'
@@ -54,6 +58,7 @@ export default () => {
     const [selectedServiceAdditionals, setSelectedServiceAdditionals] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [services, setServices] = useState(false);
+    const [favorited, setFavorited] = useState(false);
 
     const [userInfo, setUserInfo] = useState({
         id: route.params.id,
@@ -65,6 +70,7 @@ export default () => {
     useEffect(()=>{
         
         getEmployeeServicesList(setServices, userInfo.id);    
+        getIsFavorited(userInfo.id, setFavorited);
 
     }, []);
 
@@ -81,7 +87,16 @@ export default () => {
         
         setShowModal(true);
     }
-
+    const handleFavClick = () => {
+        setFavorited( !favorited );
+        console.log(favorited);
+        if(!favorited){
+            addFavorites(userInfo.id);
+        }
+        else{
+            removeFavorites(userInfo.id)
+        }
+    } 
     return (
         <Container>
             <NoPaddingScroller>
@@ -95,10 +110,14 @@ export default () => {
                             <UserInfoName>{userInfo.name}</UserInfoName>
                             <Stars stars={userInfo.stars} showNumber={true} />
                         </UserInfo>
-                        <UserFavButton>
-                            <FavoriteIcon width="24" height="24" fill="#FF0000" />
+                        <UserFavButton onPress={handleFavClick}>
+                            {favorited ? 
+                                <FavoriteFullIcon width="24" height="24" fill="#FF0000" />:
+                                <FavoriteIcon width="24" height="24" fill="#FF0000" />
+                            }    
                         </UserFavButton>
                     </UserInfoArea>
+                        <UserInfoName>{userInfo.description}</UserInfoName>
                     {
                         loading &&
                             <LoadingIcon size="large" color="#000000" />

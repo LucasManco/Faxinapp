@@ -75,10 +75,13 @@ export const ServiceDescription = styled.Text`
     font-size: 14px;
 `;
 export const ServiceChooseButton = styled.TouchableOpacity`
+    width:120px;
+    display: flex;
     background-color: #00BAF4;
     border-radius: 10px;
     padding: 10px 15px;
     align-items: center;
+    justify-content:center;
 `;
 export const ServiceChooseBtnText = styled.Text`
     color: #FFFFFF;

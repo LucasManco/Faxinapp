@@ -21,7 +21,7 @@ class WorkPlaceController extends Controller
      */
     public function index()
     {
-        $WorkPlaces = WorkPlace::where('user_id', Auth::user()->id)->get();
+        $WorkPlaces = WorkPlace::where('user_id', Auth::user()->employee()->first()->id)->get();
         return view('work_place/index')->with([
                                                         'WorkPlaces'=>$WorkPlaces,
                                                      ]);

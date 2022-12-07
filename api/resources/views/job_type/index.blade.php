@@ -22,6 +22,7 @@
                             <td class="py-4 px-6" >{{$JobType->price}}</td>
                             <td class="py-4 px-6" >{{$JobType->time}}</td>
                             <td class="acoes_evt">
+                                <a class="text-gray-500 dark:text-gray-400" href="{{route('job_type.show',['job_type'=> $JobType->id])}}">Detalhes</a>
                                 <a class="text-gray-500 dark:text-gray-400" href="{{route('job_type.edit',['job_type'=> $JobType->id])}}">Editar</a>
                                 <form method="POST" action="{{route('job_type.destroy',['job_type'=> $JobType->id])}}">
                                     @csrf

@@ -46,7 +46,7 @@ class AddressController extends Controller
             'state' => 'required|string',
             'postal_code' => 'required|string',
             'country' => 'required|string',
-            'complement' => 'required|string'
+            'complement' => 'nullable|string'
         ]);
 
         $data = $request->all();

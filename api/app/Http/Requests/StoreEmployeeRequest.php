@@ -24,8 +24,15 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'transport_value'=> 'string',
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'transport_value'=> 'numeric',
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            'categorie_diarista' => '',
+            'categorie_piscina' => '',
+            'categorie_passadeira' => '',
+            'categorie_lavadeira' => '',
+            'categorie_cozinheira' => '',
+            'description' => 'string'
+
         ];
     }
 }

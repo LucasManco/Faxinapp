@@ -23,6 +23,24 @@ export async function getEmployees(employeeRereived) {
     
     employeeRereived(employeeList);
 }
+export async function getEmployeesByDate(employeeRereived, date) {
+    var employeeList = [];
+    const token = await AsyncStorage.getItem('token');
+
+    const req = await fetch(`${BASE_API}/employee`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        },
+        body: JSON.stringify(date)
+    });
+    
+    employeeList = await req.json();    
+    
+    employeeRereived(employeeList);
+}
 
 export async function getEmployee(id) {
     var employeeList = [];
@@ -38,7 +56,6 @@ export async function getEmployee(id) {
     });
     
     employeeList = await req.json();    
-
     employeeRereived(employeeList);
 }
 
@@ -72,7 +89,6 @@ export async function getEmployeeAgenda(agendaRereived, id) {
             'Authorization' : `Bearer ${token}`
         }
     });
-    console.log('AAAA');
     dateList = await req.json();    
     agendaRereived(dateList);
 
@@ -105,6 +121,40 @@ export async function getDefaultAddress(addressRereived){
             'Authorization' : `Bearer ${token}`
         }
     });
-    address = await req.json();    
+    address = await req.json();   
+    code = await req.status;
+    if(code == 404){
+        addressRereived(null);    
+    }
+
     addressRereived(address);
 }
+export async function getIsFavorited (id, favoritedRereived){
+    const token = await AsyncStorage.getItem('token');    
+    const req = await fetch(`${BASE_API}/getIsFavorited/${id}`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    asw = await req.json();  
+    console.log(asw)  ;
+    favoritedRereived(asw[0]);
+}
+
+export async function getFavorites (favoritesRereived){
+    const token = await AsyncStorage.getItem('token');    
+    const req = await fetch(`${BASE_API}/favorites`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    asw = await req.json();  
+    favoritesRereived(asw);
+}
+

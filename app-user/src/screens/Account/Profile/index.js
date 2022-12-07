@@ -54,8 +54,8 @@ export default () => {
 
     return (
         <Container>
-            <CustomText>{user.name}</CustomText>
-            <CustomText>AAAAAAAAAAAAAAAAAAA</CustomText>
+            <CustomText></CustomText>
+            
             <CustomButton onPress={handleAddress}>
                 <CustomButtonText>Endereços</CustomButtonText>
                 <CustomButtonTextSeccundary>Meus Endereços de Entrega</CustomButtonTextSeccundary>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Platform, RefreshControl } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 
-
+import DatePicker from 'react-native-date-picker';
 import {getEmployees, getDefaultAddress} from '../../api/EmployeeApi'
 
 
@@ -13,7 +13,8 @@ import {
     HeaderArea,
     HeaderTitle,
     SearchButton,
-
+    CustomButton,
+    CustomButtonText,
     LoadingIcon,
     ListArea,
     LocationArea,
@@ -27,7 +28,6 @@ import EmployeeItem from '../../components/EmployeeItem';
 
 import SearchIcon from '../../assets/search.svg';
 import MyLocationIcon from '../../assets/my_location.svg';
-import DatePicker from "../../components/DatePicker";
 
 export default () => {
     const navigation = useNavigation();
@@ -38,6 +38,8 @@ export default () => {
     const [refreshing, setRefreshing] = useState(false);
     const [employees, setEmployees] = useState([]);
     const isFocused = useIsFocused();
+    const [date, setDate] = useState(new Date())
+    const [open, setOpen] = useState(false)
 
     
 
@@ -57,9 +59,15 @@ export default () => {
         setLoading(false);
     }
 
+   
+    useEffect(()=>{
+        getEmployeesList();
+    }, [date, address]);
+
     useEffect(()=>{
         if(isFocused){ 
             getCurrentAddress();
+            console.log(date);
         }
     }, [isFocused]);
 
@@ -85,7 +93,24 @@ export default () => {
                     </LocationChangeButton>
                 </LocationArea>
 
-                <DatePicker />
+                <CustomButton title="Open" onPress={() => setOpen(true)}>
+                    <CustomButtonText>{date ? date.getDate() + ' / ' + (date.getMonth()+1) +' / ' + date.getFullYear(): 'Selecione uma data'}</CustomButtonText>
+                </CustomButton>
+                <DatePicker
+                    modal
+                    mode = "date"
+                    open={open}
+                    date={date}
+                    onConfirm={(date) => {
+                    setOpen(false)
+                    setDate(date)
+                    }}
+                    onCancel={() => {
+                    setOpen(false)
+                    }}
+                    minimumDate={new Date()}                    
+                />
+                
 
 
                 {loading &&

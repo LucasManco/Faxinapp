@@ -98,6 +98,7 @@ export async function storeAddress (address){
         body: JSON.stringify(address)
     });
     address = await req.json();    
+    console.log(address);
 }
 
 
@@ -126,4 +127,30 @@ export async function setDefaultAddress (id, addressRereived){
     });
     addresses = await req.json();    
     addressRereived(addresses);
+}
+
+export async function addFavorites (id){
+    const token = await AsyncStorage.getItem('token');    
+    const req = await fetch(`${BASE_API}/addFavorite/${id}`,{
+        method: 'POST',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    address = await req.json();    
+}
+
+export async function removeFavorites (id){
+    const token = await AsyncStorage.getItem('token');    
+    const req = await fetch(`${BASE_API}/removeFavorite/${id}`,{
+        method: 'POST',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    address = await req.json();    
 }

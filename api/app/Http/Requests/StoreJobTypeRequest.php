@@ -25,9 +25,9 @@ class StoreJobTypeRequest extends FormRequest
     {
         return [
             'name'=> 'required|string',
-            'description' => 'required|string',
+            'description' => 'required|string|max:255',
             'time' => 'required|string',
-            'price' => 'required|string'
+            'price' => 'required|numeric'
         ];
     }
 }

@@ -46,14 +46,14 @@ export default ({ state, navigation }) => {
 
     return (
         <TabArea>
-            <TabItem onPress={()=>goTo('Home')}>
-                <HomeIcon style={{opacity: state.index===0? 1 : 0.5}} width="24" height="24" fill="#FFFFFF" />
-            </TabItem>
             <TabItem onPress={()=>goTo('Search')}>
                 <SearchIcon style={{opacity: state.index===1? 1 : 0.5}} width="24" height="24" fill="#FFFFFF" />
             </TabItem>
-            <TabItemCenter onPress={()=>goTo('Appointments')}>
-                <TodayIcon width="32" height="32" fill="#00BAF4" />
+            <TabItem onPress={()=>goTo('Appointments')}>
+                <TodayIcon width="24" height="24" fill="#FFFFFF" />
+            </TabItem>
+            <TabItemCenter onPress={()=>goTo('Home')}>
+                <HomeIcon style={{opacity: state.index===0? 1 : 0.5}} width="32" height="32" fill="#00BAF4" />
             </TabItemCenter>
             <TabItem onPress={()=>goTo('Favorites')}>
                 <FavoriteIcon style={{opacity: state.index===3? 1 : 0.5}} width="24" height="24" fill="#FFFFFF" />

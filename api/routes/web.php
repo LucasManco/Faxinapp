@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\JobTypeController;
 use App\Http\Controllers\Web\JobController;
 use App\Http\Controllers\Web\WorkDayController;
 use App\Http\Controllers\Web\WorkPlaceController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,16 @@ use App\Http\Controllers\Web\WorkPlaceController;
 */
 
 Route::get('/', function () {
-    return redirect('/login');
+    $user = Auth::user();
+
+    if($user){
+        return redirect()->route('user.show', ['user' => $user->id]);
+    }
+    else{
+        return redirect('/login');
+    }
+    
+    
 });
 
 // Route::get('/dashboard', function () {

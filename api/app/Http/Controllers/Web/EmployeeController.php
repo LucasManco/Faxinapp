@@ -77,10 +77,12 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
+        // dd($request->all());
         $data = $request->validated();
+        // dd($data);
         $data["charge_transport"] = isset($data->transport_value) && $data->transport_value > 0;
         $data["user_id"] = Auth::user()->id;
-
+        
         /**
          * Tratamento do armazenamento de imagem
          */
@@ -89,6 +91,33 @@ class EmployeeController extends Controller
         $request->image->move(public_path('images/profile'), $imageName);
         $data["profile_image"] = "/images/profile" . $imageName;
 
+
+        /**
+         * Tratamento Categorias
+         */
+
+        $categories_list = [];
+
+        
+        if(isset($data['categorie_diarista'])){
+            $categories_list[]= "Diarista";
+        }
+        if(isset($data['categorie_piscina'])){
+            $categories_list[]= "Limpeza de Piscina";
+        }
+        if(isset($data['categorie_passadeira'])){
+            $categories_list[]="Passadeira";
+        }
+        if(isset($data['categorie_lavadeira'])){
+            $categories_list[]="Lavadeira";
+        }
+        if(isset($data['categorie_cozinheira'])){
+            $categories_list[]="Cozinheira";
+        }
+
+        $data['categories'] = json_encode($categories_list);
+
+        
         Employee::create($data);
 
 

@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'phone_number' => sprintf('(0%s) %s', $faker->areaCode, $faker->landline),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
+            'favorites' => json_encode([]),
         ];
     }
 

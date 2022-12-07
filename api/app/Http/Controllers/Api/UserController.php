@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Address;
+use App\Models\Employee;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -61,7 +62,64 @@ class UserController extends Controller
 
     public function getDefaultAddress(){
 
+        if(Auth::user()->default_address_id==null){
+            return response(["Definir Endereço"], 404);
+        }
         $address =  Address::findOrFail(Auth::user()->default_address_id);    
         return response()->json([$address->street . ', ' . $address->number]);    
+    }
+
+    public function addFavorite($id){
+        $employee = Employee::findOrFail($id);
+        $user = Auth::user();
+        $favorites = json_decode($user->favorites);
+        $favorites[] = $employee->id;
+        $user->favorites = json_encode($favorites);
+        $user->save();
+        return response()->json("Favorito adicionado com sucesso.",200);
+    }
+    public function removeFavorite($id){
+        $employee = Employee::findOrFail($id);
+        $user = Auth::user();
+        $favorites = json_decode($user->favorites);
+        foreach ($favorites as $key=>$favorite){
+            if($favorite == $id){
+                unset($favorites[$key]);
+            }
+
+        }
+        $user->favorites = json_encode($favorites);
+        $user->save();
+        return response()->json("Favorito removido com sucesso.",200);
+    }
+
+    public function getFavorites(){
+        
+        $user = Auth::user();
+        $favorites = json_decode($user->favorites);
+        $employees = [];
+        foreach($favorites as $favorite){
+            $employee = Employee::find($favorite);
+            $user = $employee->getUser();
+            $employee['name'] = $user->name;
+            $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+            $employees[] = $employee;
+        }
+
+        return response()->json($employees,200);
+    }
+
+    public function getIsFavorited($id){
+        
+        $employee = Employee::findOrFail($id);
+        $user = Auth::user();
+        $favorites = json_decode($user->favorites);
+        foreach ($favorites as $key=>$favorite){
+            if($favorite == $id){
+                return response()->json([true],200);
+            }
+
+        }
+        return response()->json([false],200);
     }
 }

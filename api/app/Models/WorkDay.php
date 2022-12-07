@@ -69,48 +69,74 @@ class WorkDay extends Model
         // dd($workDays);
 
         $AvaliableDays = [];
-        foreach ($workDays as $workDay){
-            // dd($workDay->week_day);
-            $day ='';
-            switch($workDay->week_day){
-                case 0:
-                    $day = strtotime('next Sunday');
-                    break;
-                case 1:
-                    $day = strtotime('next Monday');
-                    break;
-                case 2:
-                    $day = strtotime('next Tuesday');
-                    break;
-                case 3:
-                    $day = strtotime('next Wednesday');
-                    break;
-                case 4:
-                    $day = strtotime('next Thursday');
-                    break;
-                case 5:
-                    $day = strtotime('next Friday');
-                    break;
-                case 6:
-                    $day = strtotime('next Saturday');
-                    break;
-            }
-            $AvaliableHours = [];
-            $currentHour = strtotime($workDay->start);
-            
+        $dayId = 0;
+        $day = strtotime('Today');
+        while ($dayId < 7){
+            foreach ($workDays as $key=>$workDay){
+                if($workDay->week_day == date('w', $day)){
+                    $AvaliableHours = [];
+                    $currentHour = strtotime($workDay->start);
+                    
 
-            while ( $currentHour < strtotime($workDay->end)){
-                $AvaliableHours[] = $time = date('H:i', $currentHour);
-                $currentHour = strtotime('+1 hour', $currentHour);
+                    while ( $currentHour < strtotime($workDay->end)){
+                        $AvaliableHours[] = $time = date('H:i', $currentHour);
+                        $currentHour = strtotime('+1 hour', $currentHour);
+                    }
+                    $AvaliableDays[] = [
+                        "hours" => $AvaliableHours,
+                        "date" => date('d-m-Y', $day)
+                    ] ;
+                    unset($workDays[$key]);
+                    break;
+                }
             }
-
-            
-            $AvaliableDays[] = [
-                                    "hours" => $AvaliableHours,
-                                    "date" => date('d-m-Y', $day)
-                                ] ;
+            $day = strtotime('+1 day', $day);
+            $dayId++;
 
         }
+        // dd($AvaliableDays);
+        // foreach ($workDays as $workDay){
+        //     // dd($workDay->week_day);
+        //     $day ='';
+        //     switch($workDay->week_day){
+        //         case 0:
+        //             $day = strtotime('next Sunday');
+        //             break;
+        //         case 1:
+        //             $day = strtotime('next Monday');
+        //             break;
+        //         case 2:
+        //             $day = strtotime('next Tuesday');
+        //             break;
+        //         case 3:
+        //             $day = strtotime('next Wednesday');
+        //             break;
+        //         case 4:
+        //             $day = strtotime('next Thursday');
+        //             break;
+        //         case 5:
+        //             $day = strtotime('next Friday');
+        //             break;
+        //         case 6:
+        //             $day = strtotime('next Saturday');
+        //             break;
+        //     }
+        //     $AvaliableHours = [];
+        //     $currentHour = strtotime($workDay->start);
+            
+
+        //     while ( $currentHour < strtotime($workDay->end)){
+        //         $AvaliableHours[] = $time = date('H:i', $currentHour);
+        //         $currentHour = strtotime('+1 hour', $currentHour);
+        //     }
+
+            
+        //     $AvaliableDays[] = [
+        //                             "hours" => $AvaliableHours,
+        //                             "date" => date('d-m-Y', $day)
+        //                         ] ;
+
+        // }
         return $AvaliableDays;
         
     }
