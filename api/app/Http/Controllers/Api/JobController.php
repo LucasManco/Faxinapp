@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\JobType;
 use App\Models\JobTypeAdditional;
+use App\Models\Review;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,44 @@ class JobController extends Controller
             $job['status']          = __($job->status);   
             $job['start']           = date('d/m/Y H:i', strtotime($job->start_time));
         }
+        return $jobList;
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByStatus(Request $request)
+    {
+        $data = $request->all();
+        // dd($data);
+        // $jobList = Job::all();
+        $jobList = Job::where('user_id', Auth::user()->id)->get();
+
+
+        if(isset($data['status']) || $data['status'] != null){
+            // dd('to aqui dentro ' . $data['status']);
+
+            foreach ($jobList as $key=>$job){
+                if($job['status'] != $data['status']){
+                    // dd($job);
+                    unset($jobList[$key]);
+                }
+            }       
+        }
+        // dd('eita');
+        foreach ($jobList as $job){
+            $job['profile_image']   = 'http://192.168.2.117:8000'.$job->employee()->first()->profile_image;
+            $job['name']            = $job->employee()->first()->getUser()->name;
+            $job['email']            = $job->employee()->first()->getUser()->email;
+            $job['phone']            = $job->employee()->first()->getUser()->phone_number;
+            $job['address']         = $job->address();
+            $job['status']          = __($job->status);   
+            $job['start']           = date('d/m/Y H:i', strtotime($job->start_time));
+            $job['end']           = date('d/m/Y H:i', strtotime($job->end_time));
+        }
+
         return $jobList;
     }
 
@@ -152,5 +191,35 @@ class JobController extends Controller
     public function destroy($id)
     {
         return Job::destroy($id);
+    }
+
+     /**
+     * Finish a job and create a Review
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function finishJob(Request $request, $id)
+    {
+        $job = Job::findOrFail($id);
+
+        $job->status = 'done';
+        
+        $review_data = [
+            'score' => $request->score,
+            'description' =>$request->description,
+            'job_id' => $job->id,
+            'user_id' => $job->user_id,
+            'employee_id' => $job->employee_id,
+        ];
+        if($review_data['description'] == null){
+            $review_data['description'] = ' ';
+        }
+        // dd($review_data);
+        $review = Review::create($review_data);
+        
+        $job->employee()->first()->updateScore();
+        
+        return $job->save();
     }
 }

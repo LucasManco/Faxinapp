@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\AddressController;
 use App\Http\Controllers\Web\UserController;
 use App\Http\Controllers\Web\EmployeeController;
 use App\Http\Controllers\Web\JobTypeController;
+use App\Http\Controllers\Web\JobTypeAdditionalController;
 use App\Http\Controllers\Web\JobController;
 use App\Http\Controllers\Web\WorkDayController;
 use App\Http\Controllers\Web\WorkPlaceController;
@@ -50,7 +51,9 @@ Route::middleware('auth')->group(function () {
         'update','delete'
     ]);
     Route::resource('job_type', JobTypeController::class);
-    
+    Route::resource('job_type_additional', JobTypeAdditionalController::class)->except([
+        'index'
+   ]);
     Route::resource('work_day', WorkDayController::class)->except([
          'update', 'delete', 'create', 'show'
     ]);

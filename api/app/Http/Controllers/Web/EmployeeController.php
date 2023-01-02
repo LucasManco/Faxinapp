@@ -89,7 +89,7 @@ class EmployeeController extends Controller
 
         $imageName = time().'.'.$request->image->extension();
         $request->image->move(public_path('images/profile'), $imageName);
-        $data["profile_image"] = "/images/profile" . $imageName;
+        $data["profile_image"] = "/images/profile/" . $imageName;
 
 
         /**

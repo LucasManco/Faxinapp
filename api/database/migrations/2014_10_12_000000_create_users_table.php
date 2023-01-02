@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('cpf')->nullable();
             $table->float('score')->nullable();
-            $table->json('favorites');
+            $table->json('favorites')->nullable();
+            $table->string('profile_image')->nullable();
             $table->unsignedBigInteger('default_address_id')->nullable();
             $table->rememberToken();
             $table->timestamps();

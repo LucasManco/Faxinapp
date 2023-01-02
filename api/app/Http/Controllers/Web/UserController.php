@@ -32,7 +32,20 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('user/edit')->with('user',$user);;
+        $employee = Employee::where('user_id', $user->id)->first();
+        $categorie_db = json_decode($employee->categories);
+        $categories_list =[];
+        $categories_list['Diarista'] = false;
+        $categories_list['Limpeza de Piscina'] = false;
+        $categories_list['Passadeira'] = false;
+        $categories_list['Lavadeira'] = false;
+        $categories_list['Cozinheira'] = false;
+        
+        foreach($categorie_db as $categorie){
+            $categories_list[$categorie] = true;
+        }
+        $employee->categorie_list = $categories_list;
+        return view('user/edit')->with(['user'=>$user, 'employee' => $employee]);
 
     }
 
@@ -59,9 +72,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user =  User::findOrFail($id);
-        //$user->isEmployee = $user->isEmployee();
+        $employee = Employee::where('user_id', $user->id)->first();
 
-        return view('user/show')->with('user',$user);
+        return view('user/show')->with(['user' => $user, 'employee' => $employee ]);
     }
 
     /**
@@ -73,9 +86,59 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $user = User::findOrFail($id);
+        $user_data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'cpf' => $request->cpf,
+        ];
+        
+        $user->update($user_data);
+        
+        $employee = Employee::where('user_id', $user->id)->first();
+        if($employee){
+            
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images/profile'), $imageName);
+            
+            /**
+             * Tratamento Categorias
+             */
 
-        $user->update($request->all());
+            $categories_list = [];
+
+            
+            if(isset($request['categorie_diarista'])){
+                $categories_list[]= "Diarista";
+            }
+            if(isset($request['categorie_piscina'])){
+                $categories_list[]= "Limpeza de Piscina";
+            }
+            if(isset($request['categorie_passadeira'])){
+                $categories_list[]="Passadeira";
+            }
+            if(isset($request['categorie_lavadeira'])){
+                $categories_list[]="Lavadeira";
+            }
+            if(isset($request['categorie_cozinheira'])){
+                $categories_list[]="Cozinheira";
+            }
+
+            $employee_data = [
+                "transport_value" => $request->transport_value,
+                "charge_transport" => isset($request->transport_value) && $request->transport_value > 0,
+                "profile_image" => "/images/profile/" . $imageName,
+                "categories" => json_encode($categories_list),
+                "description" => $request->description,
+            ];
+
+
+            
+            $employee->update($employee_data);
+
+        }
 
         return redirect(route('user.index'))->with('msg','Usuário atualizado com sucesso');
     }

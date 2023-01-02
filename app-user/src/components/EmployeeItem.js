@@ -66,23 +66,24 @@ const CategorieText = styled.Text`
 
 export default ({data}) => {
     const navigation = useNavigation();
-
+    let categories =  JSON.parse(data.categories);
     const handleEmployeeClick = () => {
         navigation.navigate('Employee',{
             id: data.id,
             name: data.name,
-            stars: data.stars,
+            score: data.score,
             avatar: data.avatar,
-            description: data.description
+            description: data.description,
+            categories: categories
         });
     }
-    let categories =  JSON.parse(data.categories);
+    
     return (
         <Area onPress={handleEmployeeClick}>
             <Avatar source={{uri: data.avatar}} />
             <InfoArea>
                 <UserName>{data.name}</UserName>
-                <Stars stars={data.stars} showNumber={true} />
+                <Stars stars={data.score} showNumber={true} />
 
                 {/* <SeeProfileButton>
                     <SeeProfileButtonText>Ver Perfil</SeeProfileButtonText>

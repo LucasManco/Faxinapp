@@ -34,4 +34,24 @@ class Employee extends Model
     {
         return $this->hasMany(WorkDay::class, 'user_id');
     }
+    public function updateScore()
+    {
+        $reviewList = Review::where('employee_id', $this->id)->get();
+        $acumuledScore = 0;
+        $reviewsCount = 0;
+        
+        foreach($reviewList as $review){
+            $acumuledScore += $review->score;
+            $reviewsCount++;
+        }
+        
+        if($reviewsCount>0){
+            $user = $this->getUser();
+            $user->score = $acumuledScore / $reviewsCount;
+            $user->save();
+        }
+    }
+    public function reviews(){
+        return $this->hasMany(Review::class, 'employee_id');
+    }
 }

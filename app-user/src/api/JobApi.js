@@ -6,16 +6,17 @@ const BASE_API = 'http://192.168.2.117:8000/api';
 
 
 
-export async function getJobs(jobRereived) {
+export async function getJobs(jobRereived,selectedStatus) {
     var job = [];
     const token = await AsyncStorage.getItem('token');
-    const req = await fetch(`${BASE_API}/job`,{
-        method: 'GET',
+    const req = await fetch(`${BASE_API}/job/ByStatus`,{
+        method: 'POST',
         headers:{
             Accept: 'application/json',
             'Content-Type': 'application/json',
             'Authorization' : `Bearer ${token}`
-        }
+        },
+        body: JSON.stringify({'status' : selectedStatus})
     });
     
     job = await req.json();
@@ -37,4 +38,21 @@ export async function getJob(jobRereived, id) {
     
     job = await req.json();
     jobRereived(job);
+}
+
+export async function finishJob(body, id) {
+    var job = [];
+    const token = await AsyncStorage.getItem('token');
+    const req = await fetch(`${BASE_API}/job/${id}/finish`,{
+        method: 'POST',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        },
+        body: JSON.stringify(body)
+
+    });
+    
+    job = await req.json();
 }

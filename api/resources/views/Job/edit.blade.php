@@ -49,7 +49,7 @@
                                 <input
                                     class="appearance-none block w-full bg-gray-200 dark:bg-gray-800 text-cyan-400 dark:text-white border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white dark:focus:bg-gray-900"
                                     id="price" name="price" type="text" class=""
-                                    value="{{ isset($JobType) ? $JobType->price : '' }}">
+                                    value="{{ isset($JobType) ? number_format((float) $JobType->price, 2, ',', ''); : '' }}">
 
                                 @error('price')
                                     <div class="error">{{ $message }}</div>

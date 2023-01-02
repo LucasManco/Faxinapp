@@ -11,6 +11,8 @@ import EmployeeCreate from '../screens/EmployeeCreate';
 import AddressIndex from '../screens/Account/Address/Index';
 import AddressEdit from '../screens/Account/Address/Edit';
 import AddressCreate from '../screens/Account/Address/Create';
+import UserShow from '../screens/Account/User/Show';
+import UserEdit from '../screens/Account/User/Edit';
 const Stack = createStackNavigator();
 
 export default () => (
@@ -32,6 +34,10 @@ export default () => (
         <Stack.Screen name="AddressIndex" component={AddressIndex} />
         <Stack.Screen name="AddressEdit" component={AddressEdit} />
         <Stack.Screen name="AddressCreate" component={AddressCreate} />
+
+        <Stack.Screen name="UserShow" component={UserShow} />
+        <Stack.Screen name="UserEdit" component={UserEdit} />
+        
 
     </Stack.Navigator>
     

@@ -51,11 +51,20 @@ export default () => {
             'AddressIndex'
         );
     }
+    const handleProfile = () => {
+        navigation.navigate(
+            'UserShow'
+        );
+    }
 
     return (
         <Container>
             <CustomText></CustomText>
             
+            
+            <CustomButton onPress={handleProfile}>
+                <CustomButtonText>Perfil</CustomButtonText>
+            </CustomButton>     
             <CustomButton onPress={handleAddress}>
                 <CustomButtonText>Endereços</CustomButtonText>
                 <CustomButtonTextSeccundary>Meus Endereços de Entrega</CustomButtonTextSeccundary>

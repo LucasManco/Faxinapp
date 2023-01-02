@@ -82,6 +82,7 @@ class UserController extends Controller
         $employee = Employee::findOrFail($id);
         $user = Auth::user();
         $favorites = json_decode($user->favorites);
+        dd($user);
         foreach ($favorites as $key=>$favorite){
             if($favorite == $id){
                 unset($favorites[$key]);
@@ -121,5 +122,21 @@ class UserController extends Controller
 
         }
         return response()->json([false],200);
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        
+
+        $user->update($request->all());
+
+        return $user;
     }
 }

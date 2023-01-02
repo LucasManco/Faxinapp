@@ -53,6 +53,27 @@ const SeeProfileButtonText = styled.Text`
     color: #00BAF4;
 `;
 
+export const CategorieArea = styled.View`
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:row;
+    max-width: 100%;
+    
+`;
+export const CategorieItem = styled.View`
+
+    border: 1px solid #00BAF4;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+    margin:5px;
+`;
+export const CategorieText = styled.Text`
+    font-size: 13px;
+    color: #00BAF4;
+`;
+
 
 export default ({data}) => {
     const navigation = useNavigation();
@@ -61,10 +82,13 @@ export default ({data}) => {
         navigation.navigate('Job',{
             id: data.id,
             name: data.name,
+            email: data.email,
+            phone: data.phone,
             stars: data.stars,
             avatar: data.profile_image,
             status: data.status,
-            start: data.start
+            start: data.start,
+            end: data.end
         });
     }
     return (
@@ -73,11 +97,10 @@ export default ({data}) => {
 
             <InfoArea>
                 <UserName>{data.name}</UserName>
-                <Status>{data.status}</Status>
+                <CategorieItem>
+                    <CategorieText>{data.status}</CategorieText>
+                </CategorieItem>
                 <Start>Agendado para: {data.start}</Start>
-                <SeeProfileButton>
-                    <SeeProfileButtonText>Mais Detalhes</SeeProfileButtonText>
-                </SeeProfileButton>
             </InfoArea>
         </Area>
     );

@@ -46,7 +46,7 @@ export default () => {
         setLoading(true);
 
         getEmployees(setEmployees);
-
+        
         setLoading(false);
     }
 

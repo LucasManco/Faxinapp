@@ -155,7 +155,7 @@ class JobController extends Controller
             $job->status = 'canceled';
         }
         $job->save();
-        return redirect('/login')->with('msg','Solicitação realizada com sucesso.');
+        return redirect()->route('job.index')->with('msg','Solicitação realizada com sucesso.');
 
     }
 }

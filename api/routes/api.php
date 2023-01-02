@@ -30,7 +30,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('employee', EmployeeController::class);
     Route::get('employee/job-list/{id}', [EmployeeController::class, 'JobTypeList']);
     Route::get('employee/agenda/{id}', [EmployeeController::class, 'Agenda']);
+    Route::get('employee/{id}/reviews', [EmployeeController::class, 'Reviews']);
+    Route::POST('searchEmployees', [EmployeeController::class, 'searchEmployees']);
     Route::apiResource('job', JobController::class);
+    Route::post('job/ByStatus', [JobController::class, 'indexByStatus']);
+    Route::post('job/{id}/finish', [JobController::class, 'finishJob']);
     Route::apiResource('job-type', JobTypeController::class);
     Route::get('job-type/additionals/{id}', [JobTypeController::class, 'JobTypeAdditionals']);
     Route::apiResource('not-work-day', NotWorkDayTypeController::class);
@@ -38,6 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('work-day', WorkDayTypeController::class);
     
     Route::get('user/getDefaultAddress', [UserController::class, 'getDefaultAddress']);
+    Route::put('user', [UserController::class, 'update']);
 
     Route::post('logout', [UserController::class, 'logout']);
     Route::post('addFavorite/{id}', [UserController::class, 'addFavorite']);

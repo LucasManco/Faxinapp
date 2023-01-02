@@ -5,7 +5,8 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Cidade;
 use App\Models\Estado;
-
+use App\Models\User;
+use App\Models\Address;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Address>
  */
@@ -46,4 +47,22 @@ class AddressFactory extends Factory
 
         ];
     }
+     /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterMaking(function (Address $address) {
+            
+        })->afterCreating(function (Address $address) {
+            $user = User::find($address->user_id);
+            if($user->default_address_id == null){
+                $user->default_address_id = $address->id;
+                $user->save();
+            }
+        });
+    }
+
 }

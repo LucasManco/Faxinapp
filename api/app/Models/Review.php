@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'score', 'description', 'job_id','user_id','employee_id'
+    ];
+    public function user(){
+        return $this->belongsTo(User::class,'user_id')->first();
+    }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->float('score');
-            $table->string('description');
+            $table->longText('description');
 
             $table->unsignedBigInteger('job_id');
             $table->foreign('job_id')->references('id')
@@ -32,6 +32,7 @@ return new class extends Migration
                 ->on('employees')->onDelete('cascade');
 
         });
+
     }
 
     /**

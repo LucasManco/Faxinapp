@@ -7,7 +7,15 @@ export const UserInfoArea = styled.View`
     flex-direction: row;
     margin-top: -35px;
 `;
-
+export const DescriptionArea = styled.View`
+    flex-direction: row;
+    margin-left: 30px;
+    margin-right: 20px;
+`;
+export const DescriptionText = styled.Text`
+    color: #00BAF4;
+    font-size: 14px;
+`;
 export const UserAvatar = styled.Image`
     width: 110px;
     height: 110px;
@@ -40,7 +48,7 @@ export const UserFavButton = styled.TouchableOpacity`
 `;
 
 export const ServiceArea = styled.View`
-    margin-top: 30px;
+  
 `;
 
 export const ServicesTitle = styled.Text`
@@ -90,29 +98,30 @@ export const ServiceChooseBtnText = styled.Text`
     align-items: center;
 `;
 
-export const TestimonialArea = styled.View`
-    margin-top: 30px;
+export const ReviewArea = styled.View`
     padding:20px;
 `;
 
-export const TestimonialItem = styled.View`
+export const ReviewItem = styled.View`
     background-color: #00BAF4;
-    padding: 15px;
+    padding: 15px 40px;
     border-radius: 10px;
     height: 110px;
     justify-content: center;
+
+    
 `;
-export const TestimonialInfo = styled.View`
+export const ReviewInfo = styled.View`
     flex-direction:row;
     justify-content: space-between;
     margin-bottom: 5px;
 `;
-export const TestimonialName = styled.Text`
+export const ReviewName = styled.Text`
     color: #FFFFFF;
     font-size: 14px;
     font-weight: bold;
 `;
-export const TestimonialBody = styled.Text`
+export const ReviewBody = styled.Text`
     color: #FFFFFF;
     font-size: 13px;
 `;
@@ -126,4 +135,25 @@ export const BackButton = styled.TouchableOpacity`
 
 export const LoadingIcon = styled.ActivityIndicator`
     margin-top: 50px;
+`;
+
+export const CategorieArea = styled.View`
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:row;
+    max-width: 100%;
+    
+`;
+export const CategorieItem = styled.View`
+
+    border: 1px solid #00BAF4;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+    margin:5px;
+`;
+export const CategorieText = styled.Text`
+    font-size: 13px;
+    color: #00BAF4;
 `;

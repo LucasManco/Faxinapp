@@ -38,39 +38,26 @@ export default () => {
     const [refreshing, setRefreshing] = useState(false);
     const [employees, setEmployees] = useState([]);
     const isFocused = useIsFocused();
-    const [date, setDate] = useState(new Date())
-    const [open, setOpen] = useState(false)
-
     
 
     const getEmployeesList = async () => {
         setLoading(true);
 
         getFavorites(setEmployees);
-
+        
         setLoading(false);
     }
 
-    const getCurrentAddress = async () => {
-        setLoading(true);
-
-        getDefaultAddress(setAddress);
-
-        setLoading(false);
-    }
-
-   
-    useEffect(()=>{
-        getEmployeesList();
-    }, [date, address]);
-
+      
+  
     useEffect(()=>{
         if(isFocused){ 
-            console.log(date);
+            getEmployeesList();
         }
     }, [isFocused]);
 
     const onRefresh = () => {
+        getEmployeesList();
         setRefreshing(false);
     }
     

@@ -10,6 +10,7 @@
 
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="border-b-2">
+                            <th class="py-4 px-6">Cliente</th>
                             <th class="py-4 px-6">Preço</th>
                             <th class="py-4 px-6">Transporte</th>
                             <th class="py-4 px-6">Taxa</th>
@@ -20,15 +21,17 @@
                         </thead>
                         @foreach ($Jobs as $Job)
                         <tr>
-                            <td class="py-4 px-6" >{{$Job->price}}</td>
-                            <td class="py-4 px-6" >{{$Job->transport}}</td>
-                            <td class="py-4 px-6" >{{$Job->tax}}</td>
+                            <td class="py-4 px-6" >{{$Job->user()->first()->name}}</td>
+                            <td class="py-4 px-6" >R${{number_format((float) $Job->price, 2, ',', '')}}</td>
+                            <td class="py-4 px-6" >R${{number_format((float) $Job->transport, 2, ',', '')}}</td>
+                            <td class="py-4 px-6" >R${{number_format((float) $Job->tax, 2, ',', '')}}</td>
                             <td class="py-4 px-6" >{{$Job->final_price}}</td>
                             <td class="py-4 px-6" >{{__($Job->status)}}</td>
                             <td class="py-4 px-6" >{{$Job->observation}}</td>
                             <td class="py-4 px-6" >{{$Job->address()}}</td>
-                            @if ($Job->status == 'requested')
+                            
                             <td class="acoes_evt">
+                                @if ($Job->status == 'requested')
                                 <form method="POST" action="{{route('job.accept')}}">
                                     @csrf
                                     @method("PUT")
@@ -38,7 +41,7 @@
                                         Aceitar
                                     </button>
                                 </form>
-
+                                @endif
                                 <form method="POST" action="{{route('job.accept')}}">
                                     @csrf
                                     @method("PUT")
@@ -49,7 +52,7 @@
                                     </button>
                                 </form>
                             </td>
-                            @endif
+                            
                         </tr>
                         @endforeach
                     </table>

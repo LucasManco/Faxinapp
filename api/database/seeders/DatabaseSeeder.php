@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use \App\Models\User;
 use \App\Models\Address;
 use \App\Models\Employee;
+use App\Models\Job;
 use App\Models\JobType;
 use App\Models\WorkPlace;
 use App\Models\WorkDay;
@@ -85,7 +86,9 @@ class DatabaseSeeder extends Seeder
                     'description' => 'Essa limpeza está um patamar acima da geral. Também chamada de serviço de higienização, já demanda a utilização de materiais químicos mais específicos e pesados, tais como água sanitária e solventes.',
                     'price' => 60,
                     'time' => 240,
-                ]))
+                ])
+                    ->has(Job::factory()->count(5))
+                )
                 ->has(WorkPlace::factory()->count(1))
                 ->create();
 

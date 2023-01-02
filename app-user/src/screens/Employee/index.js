@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet,Text,View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
-import {getEmployeeServicesList, getIsFavorited} from '../../api/EmployeeApi';
+import {getEmployeeServicesList, getIsFavorited, getReviews} from '../../api/EmployeeApi';
 import {getService, getServiceAdditionals} from '../../api/JobTypeApi';
 import {addFavorites, removeFavorites} from '../../api/UserApi';
 
@@ -15,7 +15,8 @@ import{
     PageBody,
     Header,
     BackButton,
-    LoadingIcon, 
+    LoadingIcon,
+    CustomArea, 
 } from '../../assets/styles/common';
 
 import {  
@@ -35,11 +36,18 @@ import {
     ServiceChooseButton,
     ServiceChooseBtnText,
 
-    TestimonialArea,
-    TestimonialBody,
-    TestimonialInfo,
-    TestimonialItem,
-    TestimonialName
+    ReviewArea,
+    ReviewBody,
+    ReviewInfo,
+    ReviewItem,
+    ReviewName,
+    DescriptionArea,
+    DescriptionText,
+    CategorieArea,
+    CategorieItem,
+    CategorieText
+
+
  } from './styles';
 
 import FavoriteIcon from '../../assets/favorite.svg'
@@ -59,20 +67,28 @@ export default () => {
     const [showModal, setShowModal] = useState(false);
     const [services, setServices] = useState(false);
     const [favorited, setFavorited] = useState(false);
+    const [reviews, setReviews] = useState(false);
+    
+   
+
 
     const [userInfo, setUserInfo] = useState({
         id: route.params.id,
         name: route.params.name,
-        stars: route.params.stars,
+        score: route.params.score,
         avatar: route.params.avatar,
+        description: route.params.description,
+        categories: route.params.categories,
     });
+
 
     useEffect(()=>{
         
+        getReviews(setReviews, userInfo.id);
         getEmployeeServicesList(setServices, userInfo.id);    
         getIsFavorited(userInfo.id, setFavorited);
 
-    }, []);
+    }, [userInfo]);
 
     
 
@@ -89,7 +105,6 @@ export default () => {
     }
     const handleFavClick = () => {
         setFavorited( !favorited );
-        console.log(favorited);
         if(!favorited){
             addFavorites(userInfo.id);
         }
@@ -108,7 +123,7 @@ export default () => {
                         <UserAvatar source={{uri:userInfo.avatar}}/>
                         <UserInfo>
                             <UserInfoName>{userInfo.name}</UserInfoName>
-                            <Stars stars={userInfo.stars} showNumber={true} />
+                            <Stars stars={userInfo.score} showNumber={true} />
                         </UserInfo>
                         <UserFavButton onPress={handleFavClick}>
                             {favorited ? 
@@ -117,7 +132,44 @@ export default () => {
                             }    
                         </UserFavButton>
                     </UserInfoArea>
-                        <UserInfoName>{userInfo.description}</UserInfoName>
+                    <DescriptionArea>
+                        <UserInfo>
+                            <DescriptionText>{userInfo.description}</DescriptionText>
+                        </UserInfo>
+                    </DescriptionArea>
+                    <DescriptionArea>
+                        <CategorieArea>
+                            {userInfo.categories && userInfo.categories.length > 0 && userInfo.categories.map((item, k)=>(
+                                <CategorieItem key={k}>
+                                    <CategorieText >
+                                        {item}
+                                    </CategorieText>
+                                </CategorieItem>
+                                
+                            ))}
+                        </CategorieArea>
+                    </DescriptionArea>
+                    <ReviewArea>
+                        <Swiper
+                            style={{height: 110}}
+                            showsPagination={false}
+                            showsButtons={true}
+                            prevButton={<NavPrevIcon width="35" height="35" fill="#FFFFFF" />}
+                            nextButton={<NavNextIcon width="35" height="35" fill="#FFFFFF" />}
+                        >
+                            {reviews && reviews.map((item, k)=>(
+                                <ReviewItem key={k}>
+                                    <ReviewInfo>
+                                        <ReviewName>{item.name}</ReviewName>
+                                        <Stars stars={item.score} showNumber={false} />
+                                    </ReviewInfo>
+                                    <ReviewBody>
+                                        {item.description}
+                                    </ReviewBody>                                
+                                </ReviewItem>
+                            ))}
+                        </Swiper>
+                    </ReviewArea>
                     {
                         loading &&
                             <LoadingIcon size="large" color="#000000" />
@@ -139,37 +191,6 @@ export default () => {
                             ))}
                         </ServiceArea>
                     }
-                    <TestimonialArea>
-                        {/* 
-                            TODO  -> Swipper bugado
-                        */}
-                        <Swiper
-                            style={{height: 110}}
-                            showsPagination={false}
-                            showsButtons={true}
-                            prevButton={<NavPrevIcon width="35" height="35" fill="#000000" />}
-                            nextButton={<NavNextIcon width="35" height="35" fill="#000000" />}
-                        >
-                            <TestimonialItem key="0">
-                                <TestimonialInfo>
-                                    <TestimonialName>Fulano da Silva</TestimonialName>
-                                    <Stars stars="5" showNumber={false} />
-                                </TestimonialInfo>
-                                <TestimonialBody>
-                                    Aliquam erat volutpat.
-                                </TestimonialBody>                                
-                            </TestimonialItem>
-                            <TestimonialItem key="2">
-                                <TestimonialInfo>
-                                    <TestimonialName>iobgvopiulbgi da Silva</TestimonialName>
-                                    <Stars stars="5" showNumber={false} />
-                                </TestimonialInfo>
-                                <TestimonialBody>
-                                    iogvbpiyugbophbnpç
-                                </TestimonialBody>                                
-                            </TestimonialItem>
-                        </Swiper>
-                    </TestimonialArea>
                 </PageBody>
             </NoPaddingScroller>
             <BackButton onPress={handleBackButton}>

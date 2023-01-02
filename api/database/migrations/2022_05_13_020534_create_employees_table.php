@@ -18,7 +18,7 @@ class CreateEmployeesTable extends Migration
             $table->timestamps();
             $table->boolean('charge_transport');
             $table->float('transport_value');
-            $table->string('description');
+            $table->longText('description');
             $table->string('profile_image');
             $table->string('categories');
 

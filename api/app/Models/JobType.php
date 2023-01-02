@@ -25,4 +25,8 @@ class JobType extends Model
     {
         return $this->hasMany(JobTypeAdditional::class);
     }
+    public function job()
+    {
+        return $this->hasMany(JobType::class);
+    }
 }

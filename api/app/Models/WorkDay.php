@@ -94,50 +94,18 @@ class WorkDay extends Model
             $dayId++;
 
         }
-        // dd($AvaliableDays);
-        // foreach ($workDays as $workDay){
-        //     // dd($workDay->week_day);
-        //     $day ='';
-        //     switch($workDay->week_day){
-        //         case 0:
-        //             $day = strtotime('next Sunday');
-        //             break;
-        //         case 1:
-        //             $day = strtotime('next Monday');
-        //             break;
-        //         case 2:
-        //             $day = strtotime('next Tuesday');
-        //             break;
-        //         case 3:
-        //             $day = strtotime('next Wednesday');
-        //             break;
-        //         case 4:
-        //             $day = strtotime('next Thursday');
-        //             break;
-        //         case 5:
-        //             $day = strtotime('next Friday');
-        //             break;
-        //         case 6:
-        //             $day = strtotime('next Saturday');
-        //             break;
-        //     }
-        //     $AvaliableHours = [];
-        //     $currentHour = strtotime($workDay->start);
-            
-
-        //     while ( $currentHour < strtotime($workDay->end)){
-        //         $AvaliableHours[] = $time = date('H:i', $currentHour);
-        //         $currentHour = strtotime('+1 hour', $currentHour);
-        //     }
-
-            
-        //     $AvaliableDays[] = [
-        //                             "hours" => $AvaliableHours,
-        //                             "date" => date('d-m-Y', $day)
-        //                         ] ;
-
-        // }
         return $AvaliableDays;
         
+    }
+    /**
+     * 
+     * TODO Filtro data
+     * 
+     */
+    public function avaliable($date)
+    {
+        $agenda = $this->getAvaliableDaysApi();
+        
+        return $this->hasMany(WorkDay::class, 'user_id');
     }
 }

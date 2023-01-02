@@ -133,10 +133,44 @@ export const CustomButtonTextSeccundary = styled.Text`
     font-size: 12px;
     color: #FFF;
 `;
+export const CustomArea = styled.View`
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+`;
 export const CustomText = styled.Text`
     width: 250px;
     font-size: 24px;
     font-weight: bold;
+    color: #00BAF4;
+    margin: 0 10px;
+`;
+export const CustomText12 = styled.Text`
+    width: 250px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #00BAF4;
+    margin: 0 10px;
+`;
+
+export const CustomTextNormal = styled.Text`
+    width: 250px;
+    font-size: 24px;
+    font-weight: normal;
+    color: #00BAF4;
+    margin: 0 10px;
+`;
+
+export const CustomTextNoSize = styled.Text`
+    font-size: 24px;
+    font-weight: bold;
+    color: #00BAF4;
+    margin: 0 10px;
+`;
+
+export const CustomTextNormalNoSize = styled.Text`
+    font-size: 24px;
+    font-weight: normal;
     color: #00BAF4;
     margin: 0 10px;
 `;

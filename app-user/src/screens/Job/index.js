@@ -5,7 +5,7 @@ import Swiper from 'react-native-swiper';
 import {getJob} from '../../api/JobApi';
 import {getService, getServiceAdditionals} from '../../api/JobTypeApi';
 import Stars from '../../components/Stars';
-import EmployeeModal from '../../components/EmployeeModal';
+import JobModal from '../../components/JobModal';
 
 import{
     Container,
@@ -13,7 +13,10 @@ import{
     PageBody,
     Header,
     BackButton,
-    LoadingIcon, 
+    LoadingIcon,
+    CustomButton,
+    CustomButtonText, 
+    CustomText12
 } from '../../assets/styles/common';
 
 import {  
@@ -40,7 +43,10 @@ import {
     PriceDetails,
     PriceArea,
     PriceTitle,
-    PriceValue
+    PriceValue,
+    CategorieArea,
+    CategorieItem,
+    CategorieText
 
  } from './styles';
 
@@ -52,6 +58,7 @@ import NavNextIcon from '../../assets/nav_next.svg'
 export default () => {
     const navigation = useNavigation();
     const route = useRoute();
+    const [showModal, setShowModal] = useState(false);
 
     const [loading, setLoading] = useState(false);
     
@@ -60,17 +67,20 @@ export default () => {
     const [jobInfo, setJobInfo] = useState({
         id: route.params.id,
         name: route.params.name,
+        email: route.params.email,
+        phone: route.params.phone,
         stars: route.params.stars,
         avatar: route.params.avatar,
         status: route.params.status,
-        start: route.params.start
+        start: route.params.start,
+        end: route.params.end
     });
 
     useEffect(()=>{
         
         getJob(setJob, jobInfo.id);    
 
-    }, []);
+    }, [showModal]);
 
     
 
@@ -86,11 +96,16 @@ export default () => {
         setShowModal(true);
     }
 
+    const handleEndService = () => {
+        setShowModal(true);
+
+    }
+
     return (
         <Container>
             <NoPaddingScroller>
             <Header>
-                <UserInfoName>JobPage</UserInfoName>
+                {/* <UserInfoName>JobPage</UserInfoName> */}
 
             </Header>
                 <PageBody>
@@ -98,22 +113,25 @@ export default () => {
                         <UserAvatar source={{uri:jobInfo.avatar}}/>
                         <UserInfo>
                             <UserInfoName>{jobInfo.name}</UserInfoName>
-                            <Status>{jobInfo.status}</Status>
+                            <UserInfoName>{jobInfo.email}</UserInfoName>
+                            <UserInfoName>{jobInfo.phone}</UserInfoName>
+                            
+                            <CategorieItem>
+                                <CategorieText>{jobInfo.status}</CategorieText>
+                            </CategorieItem>
                         </UserInfo>
-                        <UserFavButton>
-                            <FavoriteIcon width="24" height="24" fill="#FF0000" />
-                        </UserFavButton>
+                        
                     </UserInfoArea>
                     {
                         loading &&
                             <LoadingIcon size="large" color="#000000" />
                     }
                     <JobDetails>
-                        <Start>Horário Marcado: {jobInfo.start}</Start>
-                        <Start>Horário Marcado: {jobInfo.start}</Start>
+                        <Start><CustomText12>Horário Marcado:</CustomText12> {jobInfo.start}</Start>
+                        <Start><CustomText12>Previsão de Término:</CustomText12> {jobInfo.end}</Start>
 
-                        <Observation>Observações: {job.observation}</Observation>
-                        <Address>Endereço: {job.address}</Address>
+                        <Observation><CustomText12>Observações:</CustomText12> {job.observation}</Observation>
+                        <Address><CustomText12>Endereço:</CustomText12> {job.address}</Address>
 
                         <JobTypeArea>
                             <JobTypeDetails>
@@ -127,9 +145,9 @@ export default () => {
                                     <JobTypeAdditionalsDetails>
                                         <JobTypeAdditionalsTitle>Adicionais:</JobTypeAdditionalsTitle>
                                         {job.job_additionals && job.job_additionals.map((item,key)=>(
-                                                <JobTypeAdditionalsItem>
+                                                <JobTypeAdditionalsItem key={key}>
                                                     <JobTypeAdditionalsName>{item.name}</JobTypeAdditionalsName>
-                                                    <JobTypeAdditionalsPrice>{item.price}</JobTypeAdditionalsPrice>
+                                                    <JobTypeAdditionalsPrice>R$ {item && item.price && item.price.toFixed(2)}</JobTypeAdditionalsPrice>
                                                 </JobTypeAdditionalsItem>
                                         ))}                                        
                                     </JobTypeAdditionalsDetails>
@@ -138,22 +156,30 @@ export default () => {
                         </JobTypeArea>
                         <PriceDetails>
                             <PriceArea>
-                                <PriceTitle>Preço</PriceTitle>
-                                <PriceValue>{job.price}</PriceValue>
+                                <PriceTitle><CustomText12>Preço</CustomText12></PriceTitle>
+                                <PriceValue>R$ {job && job.price && job.price.toFixed(2)}</PriceValue>
                             </PriceArea>
                             <PriceArea>
-                                <PriceTitle>Transporte</PriceTitle>
-                                <PriceValue>{job.transport}</PriceValue>
+                                <PriceTitle><CustomText12>Transporte</CustomText12></PriceTitle>
+                                <PriceValue>R$ {job && job.transport && job.transport.toFixed(2)}</PriceValue>
                             </PriceArea>
                             <PriceArea>
-                                <PriceTitle>Impostos</PriceTitle>
-                                <PriceValue>{job.tax}</PriceValue>
+                                <PriceTitle><CustomText12>Impostos</CustomText12></PriceTitle>
+                                <PriceValue>R$ {job && job.tax && job.tax.toFixed(2)}</PriceValue>
                             </PriceArea>
                             <PriceArea>
-                                <PriceTitle>Total</PriceTitle>
-                                <PriceValue>{job.final_price}</PriceValue>
+                                <PriceTitle><CustomText12>Total</CustomText12></PriceTitle>
+                                <PriceValue>R$ {job && job.final_price && job.final_price.toFixed(2)}</PriceValue>
                             </PriceArea>  
-                        </PriceDetails>                      
+                        </PriceDetails>  
+                        {job.status == 'confirmed'?
+                        <CustomButton onPress={handleEndService}>
+                            <CustomButtonText>Finalizar Serviço</CustomButtonText>
+                        </CustomButton>                    
+                        :
+                        <></>
+                        }
+                        
                     </JobDetails>
                     
                 </PageBody>
@@ -161,7 +187,11 @@ export default () => {
             <BackButton onPress={handleBackButton}>
                 <BackIcon width="44px" height="44px" fill="#FFFFFF" />
             </BackButton>
-
+            <JobModal
+                show={showModal}
+                setShow={setShowModal}
+                job= {job}
+            />
            
         </Container>
     );

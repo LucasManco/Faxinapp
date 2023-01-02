@@ -98,7 +98,6 @@ export async function storeAddress (address){
         body: JSON.stringify(address)
     });
     address = await req.json();    
-    console.log(address);
 }
 
 
@@ -153,4 +152,31 @@ export async function removeFavorites (id){
         }
     });
     address = await req.json();    
+}
+export async function getUser (userRereived){
+    const token = await AsyncStorage.getItem('token');    
+
+    const req = await fetch(`${BASE_API}/user`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    const json = await req.json();
+    userRereived(json);
+}
+export async function updateUser (user){
+    const token = await AsyncStorage.getItem('token');    
+    const req = await fetch(`${BASE_API}/user`,{
+        method: 'PUT',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        },
+        body: JSON.stringify(user)
+    });
+    user = await req.json();    
 }

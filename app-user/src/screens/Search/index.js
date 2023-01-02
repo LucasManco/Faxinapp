@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, RefreshControl } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import DatePicker from 'react-native-date-picker';
-import {getEmployees, getDefaultAddress} from '../../api/EmployeeApi'
+import {searchEmployees, getDefaultAddress} from '../../api/EmployeeApi'
 
 
 import {
     Container,
     Scroller,
 
-    HeaderArea,
-    HeaderTitle,
-    SearchButton,
+    
     CustomButton,
     CustomButtonText,
     LoadingIcon,
@@ -22,7 +21,11 @@ import {
     LocationText,
     
 } from '../../assets/styles/common';
-
+import {
+    SearchHeader,
+    DateButton
+    
+} from './styles';
 
 import EmployeeItem from '../../components/EmployeeItem';
 
@@ -38,15 +41,28 @@ export default () => {
     const [refreshing, setRefreshing] = useState(false);
     const [employees, setEmployees] = useState([]);
     const isFocused = useIsFocused();
-    const [date, setDate] = useState(new Date())
-    const [open, setOpen] = useState(false)
-
     
+    const [date, setDate] = useState(new Date())
+    const [openDate, setOpenDate] = useState(false)
+
+    const [openCategories, setOpenCategories] = useState(false);
+    const [selectedCategories, setSelectedCategories] = useState();
+    const [items, setItems] = useState([
+        {label: 'Todos', value: ''},
+        {label: 'Diarista', value: 'diarista'},
+        {label: 'Limpeza de Piscina', value: 'limpesa'},
+        {label: 'Passadeira', value: 'passadeira'},
+    
+        {label: 'Lavadeira', value: 'lavadeira'},
+        {label: 'Cozinheira', value: 'cozinheira'},
+    
+        
+      ]);
 
     const getEmployeesList = async () => {
         setLoading(true);
 
-        getEmployees(setEmployees);
+        searchEmployees(date, address,selectedCategories,setEmployees);
 
         setLoading(false);
     }
@@ -62,12 +78,11 @@ export default () => {
    
     useEffect(()=>{
         getEmployeesList();
-    }, [date, address]);
+    }, [date, address,selectedCategories]);
 
     useEffect(()=>{
         if(isFocused){ 
             getCurrentAddress();
-            console.log(date);
         }
     }, [isFocused]);
 
@@ -83,42 +98,53 @@ export default () => {
     }
     return (
         <Container>
-            <Scroller refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-
+            <SearchHeader>
                 <LocationArea>
                     <LocationChangeButton onPress={changeDefaultAddressHanddler}>
                         <LocationText>{address}</LocationText>
                     </LocationChangeButton>
                 </LocationArea>
 
-                <CustomButton title="Open" onPress={() => setOpen(true)}>
+                <DateButton title="Open" onPress={() => setOpenDate(true)}>
                     <CustomButtonText>{date ? date.getDate() + ' / ' + (date.getMonth()+1) +' / ' + date.getFullYear(): 'Selecione uma data'}</CustomButtonText>
-                </CustomButton>
+                </DateButton>
                 <DatePicker
                     modal
                     mode = "date"
-                    open={open}
+                    open={openDate}
                     date={date}
                     onConfirm={(date) => {
-                    setOpen(false)
+                    setOpenDate(false)
                     setDate(date)
                     }}
                     onCancel={() => {
-                    setOpen(false)
+                    setOpenDate(false)
                     }}
                     minimumDate={new Date()}                    
                 />
                 
+                <DropDownPicker
+                        open={openCategories}
+                        value={selectedCategories}
+                        items={items}
+                        setOpen={setOpenCategories}
+                        setValue={setSelectedCategories}
+                        setItems={setItems}
 
-
+                        mode="SIMPLE"
+                        badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}
+                    />
+            </SearchHeader>
+            <Scroller refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
+                
                 {loading &&
                     <LoadingIcon size="large" color="#FFFFFF" />
                 }
                 
                 <ListArea>
-                    {employees && employees.map((item, k)=>(
+                    {employees && employees.length > 0 && employees.map((item, k)=>(
                         <EmployeeItem key={k} data={item} />
                     ))}
                 </ListArea>

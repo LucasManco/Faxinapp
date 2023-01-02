@@ -24,7 +24,7 @@ export const UserInfo = styled.View`
 
 export const UserInfoName = styled.Text`
     color: #000000;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
 `;
@@ -53,12 +53,12 @@ export const LoadingIcon = styled.ActivityIndicator`
 
 export const Status = styled.Text`
     color: #444;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: normal;
 `;
 export const Start = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: normal;
 `;
 export const JobDetails = styled.View`
@@ -66,12 +66,12 @@ export const JobDetails = styled.View`
 `;
 export const Observation = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: normal;
 `;
 export const Address = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: normal;
 `;
 export const JobTypeArea = styled.View`
@@ -83,13 +83,13 @@ export const JobTypeDetails = styled.View`
 `;
 export const JobtypeName = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: bold;
     margin-right:5px;
 `;
 export const JobtypePrice = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: normal;
 `;
 export const JobTypeAdditionalsDetails = styled.View`
@@ -102,19 +102,19 @@ export const JobTypeAdditionalsItem = styled.View`
 `;
 export const JobTypeAdditionalsTitle = styled.Text`
     color: #444;
-    font-size: 12px;
+    font-size: 22px;
     font-weight: bold;
     margin-right:5px;
 `;
 export const JobTypeAdditionalsName = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: bold;
     margin-right:5px;
 `;
 export const JobTypeAdditionalsPrice = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: normal;
 `;
 export const PriceDetails = styled.View`
@@ -126,12 +126,32 @@ export const PriceArea = styled.View`
 `;
 export const PriceTitle = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: bold;
     margin-right:5px;
 `;
 export const PriceValue = styled.Text`
     color: #444;
-    font-size: 10px;
+    font-size: 18px;
     font-weight: normal;
+`;
+export const CategorieArea = styled.View`
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:row;
+    max-width: 100%;
+    
+`;
+export const CategorieItem = styled.View`
+
+    border: 1px solid #00BAF4;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+    margin:5px;
+`;
+export const CategorieText = styled.Text`
+    font-size: 13px;
+    color: #00BAF4;
 `;

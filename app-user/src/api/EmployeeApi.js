@@ -23,6 +23,30 @@ export async function getEmployees(employeeRereived) {
     
     employeeRereived(employeeList);
 }
+
+export async function searchEmployees(date, address,categories,employeeRereived) {
+    var employeeList = [];
+    const token = await AsyncStorage.getItem('token');
+    const body = {
+        'date' : date,
+        'address' : address,
+        'categories' : categories
+    };
+    const req = await fetch(`${BASE_API}/searchEmployees`,{
+        method: 'post',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        },
+        body: JSON.stringify(body)
+
+    });
+    
+    employeeList = await req.json();    
+    employeeRereived(employeeList);
+}
+
 export async function getEmployeesByDate(employeeRereived, date) {
     var employeeList = [];
     const token = await AsyncStorage.getItem('token');
@@ -140,7 +164,6 @@ export async function getIsFavorited (id, favoritedRereived){
         }
     });
     asw = await req.json();  
-    console.log(asw)  ;
     favoritedRereived(asw[0]);
 }
 
@@ -158,3 +181,18 @@ export async function getFavorites (favoritesRereived){
     favoritesRereived(asw);
 }
 
+export async function getReviews (reviewRereived, id){
+    const token = await AsyncStorage.getItem('token');    
+    console.log(id);
+    const req = await fetch(`${BASE_API}/employee/${id}/reviews`,{
+        method: 'GET',
+        headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${token}`
+        }
+    });
+    asw = await req.json();  
+    console.log(asw);
+    reviewRereived(asw);
+}

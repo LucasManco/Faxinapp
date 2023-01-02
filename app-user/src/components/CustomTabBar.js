@@ -50,7 +50,7 @@ export default ({ state, navigation }) => {
                 <SearchIcon style={{opacity: state.index===1? 1 : 0.5}} width="24" height="24" fill="#FFFFFF" />
             </TabItem>
             <TabItem onPress={()=>goTo('Appointments')}>
-                <TodayIcon width="24" height="24" fill="#FFFFFF" />
+                <TodayIcon style={{opacity: state.index===2? 1 : 0.5}}  width="24" height="24" fill="#FFFFFF" />
             </TabItem>
             <TabItemCenter onPress={()=>goTo('Home')}>
                 <HomeIcon style={{opacity: state.index===0? 1 : 0.5}} width="32" height="32" fill="#00BAF4" />
