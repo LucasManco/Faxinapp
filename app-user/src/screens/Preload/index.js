@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { ContainerCenter, LoadingIcon } from '../../assets/styles/common';
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 

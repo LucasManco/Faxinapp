@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
+import { registerRootComponent } from 'expo';
 
 import { UserContext } from '../../contexts/UserContext';
 import {
-    Container,
-    InputArea,
+    ContainerCenter,
+    InputAreaCol,
     CustomButton,
     CustomButtonText
 } from '../../assets/styles/common';
@@ -23,6 +24,9 @@ import LockIcon from '../../assets/lock.svg';
 import { Alert } from 'react-native';
 
 import UserApi from '../../api/UserApi'
+
+import App from '../../../App'
+registerRootComponent(App);
 
 export default () => {
     // const { dispatch: userDispatch } = useContext(UserContext);
@@ -63,10 +67,10 @@ export default () => {
     }
 
     return (
-        <Container>
+        <ContainerCenter>
             <FaxinaLogo width="100%" height="160" />
 
-            <InputArea>
+            <InputAreaCol>
                 <SignInput
                     IconSvg={PersonIcon}
                     placeholder="Digite seu nome"
@@ -92,7 +96,7 @@ export default () => {
                 <CustomButton onPress={handleSignClick}>
                     <CustomButtonText>CADASTRAR</CustomButtonText>
                 </CustomButton>
-            </InputArea>
+            </InputAreaCol>
 
             <SignMessageButton onPress={handleMessageButtonClick}>
                 <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
@@ -102,6 +106,6 @@ export default () => {
                 <SignMessageButtonText>Deseja se tornar um colaborador</SignMessageButtonText>
                 <SignMessageButtonTextBold>Cadastre-se aqui.</SignMessageButtonTextBold>
             </SignMessageButton>
-        </Container>
+        </ContainerCenter>
     );
 }

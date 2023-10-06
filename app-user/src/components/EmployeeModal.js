@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
-import CheckBox from '@react-native-community/checkbox';
+import Checkbox from 'expo-checkbox';
 
 import ExpandIcon from '../assets/expand.svg';
 import NavPrevIcon from '../assets/nav_prev.svg';
@@ -283,7 +283,8 @@ export default ({show, setShow, user, service, serviceAdditionals}) => {
                                 {serviceAdditionals.map((item, k)=>(
                                     <ServiceInfo key={k}>
                                         <CheckBoxArea>
-                                            <CheckBox
+                                            <Checkbox
+                                                color={selectedServiceAdditionals[k] ? '#00BAF4' : undefined}
                                                 disabled={false}
                                                 value={selectedServiceAdditionals[k]}
                                                 onValueChange={(newValue) => handleCheckboxChange(newValue, k)}

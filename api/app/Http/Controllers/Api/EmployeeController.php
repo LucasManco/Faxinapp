@@ -40,7 +40,7 @@ class EmployeeController extends Controller
                 $employee = $employee_user->employee()->first();
                 $employees[] = $employee;
                 $employee['name'] = $employee_user->name;
-                $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+                $employee['avatar'] = 'http://192.168.2.145'.$employee->profile_image;
                 $employee['score'] = $employee_user->score;
             }
         }
@@ -49,7 +49,7 @@ class EmployeeController extends Controller
             foreach ($employees as $employee){
                 $user = $employee->getUser();
                 $employee['name'] = $user->name;
-                $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+                $employee['avatar'] = 'http://192.168.2.145'.$employee->profile_image;
                 $employee['score'] = $user->score;
             }
         }
@@ -170,7 +170,7 @@ class EmployeeController extends Controller
                 $employee = $employee_user->employee()->first();
                 $employees[] = $employee;
                 $employee['name'] = $employee_user->name;
-                $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+                $employee['avatar'] = 'http://192.168.2.145'.$employee->profile_image;
             }
         }
         else{
@@ -178,7 +178,7 @@ class EmployeeController extends Controller
             foreach ($employees as $employee){
                 $user = $employee->getUser();
                 $employee['name'] = $user->name;
-                $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+                $employee['avatar'] = 'http://192.168.2.145'.$employee->profile_image;
             }
         }
 
@@ -232,7 +232,7 @@ class EmployeeController extends Controller
                 }
                 if($catValid && $dateValid){
                     $employee['name'] = $employee_user->name;
-                    $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+                    $employee['avatar'] = 'http://192.168.2.145'.$employee->profile_image;
                     $employees[] = $employee;
                 }
                                 
@@ -243,7 +243,7 @@ class EmployeeController extends Controller
             foreach ($employees as $employee){
                 $user = $employee->getUser();
                 $employee['name'] = $user->name;
-                $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+                $employee['avatar'] = 'http://192.168.2.145'.$employee->profile_image;
             }
         }
 

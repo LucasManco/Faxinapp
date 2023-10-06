@@ -67,7 +67,6 @@ class JobTypeAdditionalController extends Controller
         
         JobTypeAdditional::create($data);
 
-
         return redirect(route('job_type.show',$data['job_type_id']))->with('msg','Cadastro de novo tipo de serviço realizado com sucesso.');
 
     }

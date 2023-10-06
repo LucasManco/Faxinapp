@@ -78,6 +78,20 @@ export default () => {
                         setOpen={setOpenStatus}
                         setValue={setSelectedStatus}
                         setItems={setItems}
+                        style={{
+                            borderColor: "#00b4d8",
+                            color: "#00b4d8"
+                        }}
+                        textStyle={{
+                            color: "#00b4d8"
+
+                        }}
+                        containerStyle={{
+                            borderColor: "#00b4d8"
+                        }}
+                        labelStyle={{
+                            color: "#00b4d8"
+                        }}
 
                         mode="SIMPLE"
                         badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}

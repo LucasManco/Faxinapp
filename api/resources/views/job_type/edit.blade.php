@@ -1,6 +1,6 @@
 <x-account-page>
     <x-slot name="title">
-        {{ isset($JobType) ? 'Editar Endereço' : 'Cadastrar Novo Endereço' }}
+        {{ isset($JobType) ? 'Editar Endereço' : 'Cadastrar Novo Serviço' }}
     </x-slot>
     <x-slot name="content">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

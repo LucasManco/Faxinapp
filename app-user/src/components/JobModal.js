@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
-import CheckBox from '@react-native-community/checkbox';
+
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import ExpandIcon from '../assets/expand.svg';
@@ -223,6 +223,21 @@ export default ({show, setShow, job}) => {
                                 setValue={setSelectedScore}
                                 setItems={setItems}
                                 mode="SIMPLE"
+                                style={{
+                                    borderColor: "#00b4d8",
+                                    color: "#00b4d8"
+                                }}
+                                textStyle={{
+                                    color: "#00b4d8"
+        
+                                }}
+                                containerStyle={{
+                                    borderColor: "#00b4d8"
+                                }}
+                                labelStyle={{
+                                    color: "#00b4d8"
+                                }}
+        
                             />
                         </DropDownArea>
                         <CustomText>Gostaria de adicionar alguma observação?</CustomText>

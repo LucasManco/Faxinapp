@@ -2,7 +2,7 @@ import React, { useState , useEffect } from 'react';
 import { Text } from 'react-native';
 import UserApi from '../../../api/UserApi';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 
 
 import {

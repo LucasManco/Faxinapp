@@ -22,7 +22,7 @@ class JobController extends Controller
     {
         $jobList = Job::all();
         foreach ($jobList as $job){
-            $job['profile_image']   = 'http://192.168.2.117:8000'.$job->employee()->first()->profile_image;
+            $job['profile_image']   = 'http://192.168.2.145'.$job->employee()->first()->profile_image;
             $job['name']            = $job->employee()->first()->getUser()->name;
             $job['address']         = $job->address();
             $job['status']          = __($job->status);   
@@ -56,7 +56,7 @@ class JobController extends Controller
         }
         // dd('eita');
         foreach ($jobList as $job){
-            $job['profile_image']   = 'http://192.168.2.117:8000'.$job->employee()->first()->profile_image;
+            $job['profile_image']   = 'http://192.168.2.145'.$job->employee()->first()->profile_image;
             $job['name']            = $job->employee()->first()->getUser()->name;
             $job['email']            = $job->employee()->first()->getUser()->email;
             $job['phone']            = $job->employee()->first()->getUser()->phone_number;

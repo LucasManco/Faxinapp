@@ -103,7 +103,7 @@ class UserController extends Controller
             $employee = Employee::find($favorite);
             $user = $employee->getUser();
             $employee['name'] = $user->name;
-            $employee['avatar'] = 'http://192.168.2.117:8000'.$employee->profile_image;
+            $employee['avatar'] = 'http://192.168.2.145'.$employee->profile_image;
             $employees[] = $employee;
         }
 

@@ -16,7 +16,7 @@ export const ContainerCenter = styled.SafeAreaView`
 export const BackButton = styled.TouchableOpacity`
     position: absolute;
     left: 0;
-    top: 0;
+    top: 40px;
     z-index: 9;
 `
 
@@ -51,6 +51,7 @@ export const HeaderTitle = styled.Text`
     width: 250px;
     font-size: 24px;
     font-weight: bold;
+    padding-top:30px;
     color: #00BAF4;
 `;
 
@@ -98,12 +99,12 @@ export const InputArea = styled.View`
     background-color: #FFFFFF;
     border: 1px solid #00BAF4;
     flex-direction: row;
-    border-radius: 30px;
+    border-radius: 10px;
     padding-left: 15px;
     align-items: center;
     margin-bottom: 15px;
-    margin-left:20px;
-    margin-right:20px;
+    // margin-left:20px;
+    // margin-right:20px;
 `;
 export const InputAreaCol = styled.View`
     width: 100%;
@@ -147,7 +148,7 @@ export const CustomText = styled.Text`
 `;
 export const CustomText12 = styled.Text`
     width: 250px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     color: #00BAF4;
     margin: 0 10px;

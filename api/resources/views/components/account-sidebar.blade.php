@@ -19,7 +19,7 @@
                 </x-slot>
             </x-account-sidebar-item>
 
-            <x-account-sidebar-item>
+            <!-- <x-account-sidebar-item>
                 <x-slot name="url">{{ route('address.index'); }}</x-slot>
                 <x-slot name="title">Endereço</x-slot>
                 <x-slot name="icon">
@@ -30,7 +30,7 @@
                         <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                     </svg>
                 </x-slot>
-            </x-account-sidebar-item>
+            </x-account-sidebar-item> -->
             @if(Auth::user()->isEmployee())
                 <x-account-sidebar-item>
                     <x-slot name="url">{{ route('job_type.index'); }}</x-slot>

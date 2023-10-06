@@ -24,10 +24,15 @@ import {
     UserAvatar,
     UserInfo,
     UserInfoName,
+    UserInfoEmail,
+    UserInfoPhone,
     UserFavButton,
-
+    Divisor,
     Status,
     Start,
+    HourText,
+    Hour,
+    HourContainer,
     JobDetails,
     Observation,
     Address,
@@ -44,6 +49,8 @@ import {
     PriceArea,
     PriceTitle,
     PriceValue,
+    PriceTitleTotal,
+    PriceValueTotal,
     CategorieArea,
     CategorieItem,
     CategorieText
@@ -113,8 +120,8 @@ export default () => {
                         <UserAvatar source={{uri:jobInfo.avatar}}/>
                         <UserInfo>
                             <UserInfoName>{jobInfo.name}</UserInfoName>
-                            <UserInfoName>{jobInfo.email}</UserInfoName>
-                            <UserInfoName>{jobInfo.phone}</UserInfoName>
+                            <UserInfoEmail>{jobInfo.email}</UserInfoEmail>
+                            <UserInfoPhone>{jobInfo.phone}</UserInfoPhone>
                             
                             <CategorieItem>
                                 <CategorieText>{jobInfo.status}</CategorieText>
@@ -127,23 +134,25 @@ export default () => {
                             <LoadingIcon size="large" color="#000000" />
                     }
                     <JobDetails>
-                        <Start><CustomText12>Horário Marcado:</CustomText12> {jobInfo.start}</Start>
-                        <Start><CustomText12>Previsão de Término:</CustomText12> {jobInfo.end}</Start>
-
-                        <Observation><CustomText12>Observações:</CustomText12> {job.observation}</Observation>
-                        <Address><CustomText12>Endereço:</CustomText12> {job.address}</Address>
+                        <HourContainer>
+                        <Hour><HourText><CustomText12>Horário Marcado</CustomText12> {jobInfo.start}</HourText></Hour>
+                        <Hour><HourText><CustomText12>Previsão de Término</CustomText12> {jobInfo.end}</HourText></Hour>
+                        </HourContainer>
+                        <Divisor/>
+                        {/* <Observation><CustomText12>Observações:</CustomText12> {job.observation}</Observation> */}
+                        <Address> {job.address}</Address>
 
                         <JobTypeArea>
                             <JobTypeDetails>
                                 <JobtypeName>{job.job_type && job.job_type.name}</JobtypeName>
-                                <JobtypePrice>{job.job_type && job.job_type.price}</JobtypePrice>
+                                <JobtypePrice>R$ {job && job.price && job.price.toFixed(2)}</JobtypePrice>
                             </JobTypeDetails>
                             
                             {job.job_additionals && job.job_additionals.lenght == 0 ?
                                 <JobTypeAdditionalsDetails/>:
                                 <>
                                     <JobTypeAdditionalsDetails>
-                                        <JobTypeAdditionalsTitle>Adicionais:</JobTypeAdditionalsTitle>
+                                        {/* <JobTypeAdditionalsTitle>Adicionais:</JobTypeAdditionalsTitle> */}
                                         {job.job_additionals && job.job_additionals.map((item,key)=>(
                                                 <JobTypeAdditionalsItem key={key}>
                                                     <JobTypeAdditionalsName>{item.name}</JobTypeAdditionalsName>
@@ -156,20 +165,27 @@ export default () => {
                         </JobTypeArea>
                         <PriceDetails>
                             <PriceArea>
-                                <PriceTitle><CustomText12>Preço</CustomText12></PriceTitle>
+                                <PriceTitle>Preço</PriceTitle>
                                 <PriceValue>R$ {job && job.price && job.price.toFixed(2)}</PriceValue>
                             </PriceArea>
+                            {job && job.transport != 0 ? 
+                                <PriceArea>
+                                    <PriceTitle>Transporte</PriceTitle>
+                                    <PriceValue>R$ {job && job.transport && job.transport.toFixed(2)}</PriceValue>
+                                </PriceArea>
+                                :<></>
+                            }
+                            {job && job.tax != 0 ? 
+                                <PriceArea>
+                                    <PriceTitle>Impostos</PriceTitle>
+                                    <PriceValue>R$ {job && job.tax && job.tax.toFixed(2)}</PriceValue>
+                                </PriceArea>
+                                :<></>
+                            }
+                                                        
                             <PriceArea>
-                                <PriceTitle><CustomText12>Transporte</CustomText12></PriceTitle>
-                                <PriceValue>R$ {job && job.transport && job.transport.toFixed(2)}</PriceValue>
-                            </PriceArea>
-                            <PriceArea>
-                                <PriceTitle><CustomText12>Impostos</CustomText12></PriceTitle>
-                                <PriceValue>R$ {job && job.tax && job.tax.toFixed(2)}</PriceValue>
-                            </PriceArea>
-                            <PriceArea>
-                                <PriceTitle><CustomText12>Total</CustomText12></PriceTitle>
-                                <PriceValue>R$ {job && job.final_price && job.final_price.toFixed(2)}</PriceValue>
+                                <PriceTitleTotal>Total</PriceTitleTotal>
+                                <PriceValueTotal>R$ {job && job.final_price && job.final_price.toFixed(2)}</PriceValueTotal>
                             </PriceArea>  
                         </PriceDetails>  
                         {job.status == 'confirmed'?

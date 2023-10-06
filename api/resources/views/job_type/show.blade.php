@@ -37,8 +37,8 @@
                     @endif
                     @foreach ($JobAditionals as $JobAditional)
                         <div 
-                            class="job-additional w-full m-4 bg-cyan-400 dark:bg-gray-800 p-2 rounded  overflow-hidden flex flex-row justify-center items-center text-left"
-                            id="job_additional_{{ $JobAditional->id }}">
+                            class="job-additional w-full m-4 bg-cyan-400 dark:bg-gray-800 p-4 rounded  overflow-hidden flex flex-row justify-center items-center text-left"
+                            id="job_additional_{{ $JobAditional->id }}" style="margin: 30px 0;">
                             
                             <div class="m-4 w-1/3">
                                 <span class="py-4">{{ $JobAditional->name }}</span>

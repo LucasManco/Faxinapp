@@ -1,6 +1,6 @@
 <x-account-page>
     <x-slot name="title">
-        {{ isset($JobTypeAdditional) ? 'Editar Endereço' : 'Cadastrar Novo Endereço' }}
+        {{ isset($JobTypeAdditional) ? 'Editar Endereço' : 'Cadastrar Novo Serviço' }}
     </x-slot>
     <x-slot name="content">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -14,7 +14,7 @@
                         @else
                             @method('POST')
                         @endisset
-                        <input type="hidden" name="job_type_id" value="{{$JobType->id}}">
+                        <input type="hidden" name="job_type_id" value="{{$JobType ? $JobType->id : ''}}">
                         <div class="flex flex-wrap mx-3 mb-6">
                             <div class="w-full px-4 mb-6 md:mb-0">
                                 <label

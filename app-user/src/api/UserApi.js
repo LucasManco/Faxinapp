@@ -1,7 +1,7 @@
 // const BASE_API = 'http://10.0.2.2:8000/api';
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 
-const BASE_API = 'http://192.168.2.117:8000/api';
+const BASE_API = 'http://192.168.2.145/api';
 
 
 export default {
@@ -36,10 +36,16 @@ export default {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name, email,password})
+            body: JSON.stringify({
+                "name": name,
+                "email": email,
+                "password": password,
+                "password_confirmation": password
+              })
         });
         const json = await req.json();
-        return json;
+        console.log(json);
+        return json[0];
     },
     logout: async () =>{
         const token = await AsyncStorage.getItem('token');

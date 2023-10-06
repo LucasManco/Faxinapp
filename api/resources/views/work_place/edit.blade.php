@@ -1,6 +1,6 @@
 <x-account-page>
     <x-slot name="title">
-        {{ isset($JobType) ? 'Editar Endereço' : 'Cadastrar Novo Endereço' }}
+        {{ isset($JobType) ? 'Editar Endereço' : 'Cadastrar Novo Local de Atendimento' }}
     </x-slot>
     <x-slot name="content">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -54,7 +54,7 @@
                                 animation: spin 2s linear infinite;
                             }
                         </style>
-                        <div id="city-block" class=flex flex-wrap -mx-3 mb-6" style="display:none">
+                        <div id="city-block" class="flex flex-wrap -mx-3 mb-6" style="display:none">
                             <div class="w-1/3 md:w-1/2 px-4 mb-6 md:mb-0">
                                 <label
                                     class="block uppercase tracking-wide text-cyan-400 dark:text-white text-xs font-bold mb-2"

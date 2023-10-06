@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 export const AppointmentsHeader = styled.TouchableOpacity`
     margin:15px;
     z-index: 999999;
+    padding-top: 40px;
 `;
 
 export const CategorieArea = styled.View`

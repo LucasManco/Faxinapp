@@ -37,7 +37,7 @@
                             <p>R${{ number_format((float) $employee->transport_value, 2, '.', '') }}</p>
                         </div>
                         <div class="flex py-4 px-6">
-                            <span class="pr-1">Categories: </span>
+                            <span class="pr-1">Categoras: </span>
                             @foreach(json_decode($employee->categories) as $categorie)
                                 <span class=" px-6 text-sm text-gray-500 dark:text-gray-400 overflow-hidden flex items-center border-gray-500 rounded">{{ $categorie }}</span>
                             @endforeach
